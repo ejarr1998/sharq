@@ -4,8 +4,8 @@
   "description": "Daily curated job matches — IFS, implementation, app support. Smell opportunity in the water.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#04121d",
-  "theme_color": "#04121d",
+  "background_color": "#b6b7bf",
+  "theme_color": "#b6b7bf",
   "icons": [
     { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]
