@@ -3,97 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#04121d">
+<meta name="theme-color" content="#b6b7bf">
 <title>Sharq — Job Hunt Tracker</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/icon.svg">
 <style>
   :root {
-    --bg: #04121d; --bg2: #07202f; --card: #0a2334; --border: #14394f;
-    --text: #e8f4f8; --muted: #7fa3b5;
-    --accent: #35b6d4; --accent-deep: #1b7f99;
-    --fin: #2dd4a7; --blood: #e5604f; --gold: #f0b35e;
+    --steel: #b6b7bf;
+    --steel-hi: #d9dade;
+    --paper: #f2f2f4;
+    --ink: #0b0b10;
+    --ink-soft: #4a4a55;
+    --volt: #0019e3;
+    --volt-deep: #0012a8;
+    --gold: #c98a12;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
-    background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 60%, #041824 100%);
-    background-attachment: fixed;
-    color: var(--text); font-family: -apple-system,'Segoe UI',Roboto,sans-serif;
-    padding-bottom: 60px; min-height: 100vh;
+    background: var(--steel);
+    color: var(--ink);
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -0.01em;
+    padding-bottom: 92px;
+    min-height: 100vh;
   }
+  ::selection { background: var(--volt); color: #fff; }
+
   header {
-    padding: 22px 16px 14px; position: sticky; top: 0; z-index: 10;
-    background: rgba(4,18,29,.92); backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+    background: var(--steel);
+    border-bottom: 2px solid var(--ink);
+    padding: 16px 16px 12px;
   }
-  .brand { display:flex; align-items:center; gap:10px; }
-  h1 { font-size: 26px; letter-spacing: 1px; font-weight: 800; }
-  h1 .q { color: var(--accent); }
-  .tagline { color: var(--muted); font-size: 12px; margin-top: 2px; font-style: italic; }
-  #updated { color: var(--muted); font-size: 11px; margin-top: 6px; }
-  #stats { display:flex; gap:16px; margin-top:12px; font-size:13px; color:var(--muted); }
-  #stats b { color: var(--fin); }
-  .filters { display:flex; gap:8px; padding:12px 16px; overflow-x:auto; }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .brand svg { flex: 0 0 auto; }
+  h1 {
+    font-size: 30px; font-weight: 900; letter-spacing: 0.04em;
+    text-transform: uppercase; line-height: 1;
+    font-family: 'Arial Narrow', -apple-system, Arial, sans-serif;
+    font-stretch: condensed;
+  }
+  h1 .q { color: var(--volt); }
+  .tagline {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--ink-soft); margin-top: 3px;
+  }
+  #updated {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--ink-soft); margin-top: 8px;
+  }
+  #stats { display:flex; gap:0; margin-top:10px; border: 2px solid var(--ink); background: var(--paper); }
+  #stats .stat {
+    flex:1; padding: 8px 10px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft);
+    border-right: 2px solid var(--ink);
+  }
+  #stats .stat:last-child { border-right: none; }
+  #stats .stat b { display:block; font-size: 20px; color: var(--ink); letter-spacing: 0; }
+  #stats .stat.hot b { color: var(--volt); }
+
+  .filters {
+    display:flex; gap:8px; padding:12px 16px; overflow-x:auto;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters.hidden { display:none; }
   .chip {
-    padding:6px 14px; border-radius:20px; border:1px solid var(--border);
-    background:var(--card); color:var(--muted); font-size:13px; cursor:pointer; white-space:nowrap;
+    padding: 7px 14px; border: 2px solid var(--ink); background: var(--paper);
+    color: var(--ink); font-size: 11px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; cursor: pointer; white-space: nowrap; border-radius: 0;
   }
-  .chip.active { background:var(--accent); color:#04222e; border-color:var(--accent); font-weight:700; }
-  #jobs { padding:0 16px; display:flex; flex-direction:column; gap:12px; max-width:720px; margin:0 auto; }
+  .chip.active { background: var(--volt); color: #fff; border-color: var(--volt); box-shadow: 3px 3px 0 var(--ink); }
+
+  #jobs { padding: 2px 16px 0; display:flex; flex-direction:column; gap:16px; max-width: 720px; margin: 0 auto; }
   .card {
-    background: linear-gradient(160deg, var(--card), #081c2a);
-    border:1px solid var(--border); border-radius:14px; padding:16px;
-    box-shadow: 0 4px 18px rgba(0,0,0,.35);
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+    padding: 16px;
   }
-  .card.fresh { border-color: var(--fin); }
+  .card.fresh { box-shadow: 5px 5px 0 var(--volt); }
   .card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
-  .card h2 { font-size:16px; line-height:1.3; }
-  .company { color:var(--muted); font-size:13px; margin-top:2px; }
-  .badge { font-size:11px; padding:3px 9px; border-radius:10px; white-space:nowrap; font-weight:700; }
-  .badge.new { background:rgba(45,212,167,.12); color:var(--fin); border:1px solid var(--fin); }
-  .badge.applied { background:rgba(240,179,94,.12); color:var(--gold); border:1px solid var(--gold); }
-  .meta { display:flex; flex-wrap:wrap; gap:12px; margin:10px 0; font-size:13px; }
-  .meta span { color:var(--muted); }
-  .meta .pay { color:var(--fin); font-weight:700; }
+  .card h2 {
+    font-size: 18px; font-weight: 900; text-transform: uppercase;
+    letter-spacing: 0.01em; line-height: 1.15;
+    font-family: 'Arial Narrow', -apple-system, Arial, sans-serif;
+  }
+  .company {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--ink-soft); margin-top: 3px;
+  }
+  .badge {
+    font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 4px 8px; white-space: nowrap; border: 2px solid var(--ink);
+  }
+  .badge.new { background: var(--volt); color: #fff; border-color: var(--volt); }
+  .badge.applied { background: var(--ink); color: var(--gold); }
+  .badge.dead { background: var(--steel); color: var(--ink-soft); }
+
+  .meta {
+    display:flex; flex-wrap:wrap; gap: 6px 14px; margin: 12px 0 0;
+    padding-top: 10px; border-top: 2px solid var(--ink);
+    font-size: 12px; font-weight: 600; color: var(--ink-soft);
+  }
+  .meta .pay { color: var(--volt); font-weight: 800; }
+
   .fit {
-    font-size:13px; color:#c3d9e3; line-height:1.55;
-    border-left:3px solid var(--accent); padding-left:10px; margin:10px 0;
+    font-size: 14px; line-height: 1.5; color: var(--ink);
+    margin: 12px 0 0; padding: 10px 12px;
+    background: var(--steel-hi);
+    border-left: 4px solid var(--volt);
   }
-  .actions { display:flex; gap:10px; margin-top:12px; }
+
+  .actions { display:flex; gap:10px; margin-top:14px; }
   .btn {
-    flex:1; text-align:center; padding:10px; border-radius:8px; font-size:14px; font-weight:700;
-    text-decoration:none; cursor:pointer; border:none;
+    flex:1; text-align:center; padding: 11px; font-size: 12px; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    text-decoration:none; cursor:pointer;
+    border: 2px solid var(--ink); border-radius: 0;
+    background: var(--paper); color: var(--ink);
   }
-  .btn-apply { background: linear-gradient(135deg, var(--accent), var(--accent-deep)); color:#fff; }
-  .btn-mark { background:transparent; color:var(--muted); border:1px solid var(--border); flex:0 0 auto; padding:10px 14px; }
-  #empty { text-align:center; color:var(--muted); padding:60px 20px; line-height:1.7; }
+  .btn:active { transform: translate(2px, 2px); }
+  .btn-apply { background: var(--volt); color: #fff; border-color: var(--volt); box-shadow: 3px 3px 0 var(--ink); }
+  .btn-apply:active { box-shadow: 1px 1px 0 var(--ink); }
+  .btn-mark { flex: 0 0 auto; padding: 11px 14px; box-shadow: 3px 3px 0 var(--ink); }
+  .btn-dismiss { flex: 0 0 auto; padding: 11px 13px; color: var(--ink-soft); }
+  .btn-dismiss:hover { color: #fff; background: var(--ink); }
+  .btn-restore { flex: 0 0 auto; padding: 11px 14px; color: var(--volt); border-color: var(--volt); }
+
+  #empty {
+    text-align:center; color: var(--ink-soft); padding: 60px 20px; line-height: 1.8;
+    font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
   #push-banner {
-    margin:12px 16px; padding:14px 16px; max-width:688px;
-    background:linear-gradient(135deg,#0a2a3d,#081c2a);
-    border:1px solid var(--accent); border-radius:12px; display:none; align-items:center; gap:12px;
+    margin: 12px 16px; max-width: 688px;
+    background: var(--ink); color: var(--paper);
+    border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--volt);
+    display: none; align-items: center; gap: 12px; padding: 14px 16px;
   }
-  #push-banner p { font-size:13px; flex:1; }
-  #push-banner button { background:var(--accent); color:#04222e; border:none; padding:8px 16px; border-radius:8px; font-weight:700; cursor:pointer; }
+  #push-banner p { font-size: 13px; flex: 1; line-height: 1.4; }
+  #push-banner button {
+    background: var(--volt); color: #fff; border: 2px solid var(--volt);
+    padding: 9px 16px; font-weight: 900; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.1em; cursor: pointer; border-radius: 0;
+  }
+
   #toast {
-    position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-    background:var(--fin); color:#04222e; padding:10px 20px; border-radius:8px;
-    font-size:14px; font-weight:600; display:none; z-index:99;
+    position: fixed; bottom: 104px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: var(--paper);
+    border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--volt);
+    padding: 10px 18px; font-size: 12px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    display: none; z-index: 99; white-space: nowrap;
   }
-  .wave { display:block; width:100%; height:24px; margin-top:8px; opacity:.5; }
+
+  #tabs {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+    display: flex; background: var(--paper);
+    border-top: 2px solid var(--ink);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .tab {
+    flex: 1; text-align: center; padding: 10px 4px 8px; cursor: pointer;
+    color: var(--ink-soft); font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    border-right: 2px solid var(--ink);
+  }
+  .tab:last-child { border-right: none; }
+  .tab .ico { font-size: 19px; display: block; margin-bottom: 3px; filter: grayscale(1); }
+  .tab .count {
+    display: inline-block; min-width: 18px; padding: 1px 5px; margin-left: 4px;
+    background: var(--steel); color: var(--ink); font-size: 10px; font-weight: 900;
+    border: 1.5px solid var(--ink);
+  }
+  .tab.active { color: var(--volt); background: var(--steel-hi); }
+  .tab.active .ico { filter: none; }
+  .tab.active .count { background: var(--volt); color: #fff; border-color: var(--volt); }
 </style>
 </head>
 <body>
 <header>
   <div class="brand">
-    <svg width="34" height="34" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <path d="M8 46 Q22 12 40 10 Q34 24 38 34 Q46 30 56 32 Q48 44 34 48 Q18 52 8 46 Z" fill="#35b6d4"/>
-      <circle cx="24" cy="38" r="2.4" fill="#04121d"/>
-      <path d="M4 52 Q16 46 28 52 T52 52" stroke="#2dd4a7" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <svg width="40" height="40" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="60" height="60" fill="#0019e3" stroke="#0b0b10" stroke-width="3"/>
+      <path d="M10 44 Q23 14 39 12 Q33 25 37 33 Q45 29 54 31 Q46 42 34 46 Q20 50 10 44 Z" fill="#f2f2f4"/>
+      <circle cx="24" cy="37" r="2.4" fill="#0b0b10"/>
+      <path d="M8 51 Q18 46 28 51 T48 51" stroke="#b6b7bf" stroke-width="3" fill="none" stroke-linecap="round"/>
     </svg>
     <div>
-      <h1>SHAR<span class="q">Q</span></h1>
-      <div class="tagline">Smell opportunity in the water.</div>
+      <h1>Shar<span class="q">q</span></h1>
+      <div class="tagline">Smell opportunity in the water</div>
     </div>
   </div>
   <div id="updated">Circling…</div>
@@ -105,7 +207,7 @@
   <button id="enable-push">Enable</button>
 </div>
 
-<div class="filters">
+<div class="filters" id="filters">
   <div class="chip active" data-f="all">All waters</div>
   <div class="chip" data-f="ifs">IFS / MWM</div>
   <div class="chip" data-f="implementation">Implementation</div>
@@ -115,6 +217,13 @@
 </div>
 
 <div id="jobs"></div>
+
+<div id="tabs">
+  <div class="tab active" data-tab="hunt"><span class="ico">🦈</span>Hunt<span class="count" id="c-hunt">0</span></div>
+  <div class="tab" data-tab="caught"><span class="ico">🎣</span>Caught<span class="count" id="c-caught">0</span></div>
+  <div class="tab" data-tab="dismissed"><span class="ico">🌊</span>Released<span class="count" id="c-dismissed">0</span></div>
+</div>
+
 <div id="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -133,51 +242,107 @@ const VAPID_KEY = "BIFMG3wX0YVOLmFde6ckEbLfdiGhtGWICd9GLsm9UJiCQ3sUEjW52GF0FYMk1
 // =========================================
 
 const $ = s => document.querySelector(s);
-let allJobs = [], filter = 'all';
-let applied = JSON.parse(localStorage.getItem('sharq_applied') || '[]');
+let allJobs = [], filter = 'all', tab = 'hunt';
+let applied = JSON.parse(localStorage.getItem('sharq_applied') || '{}');
+let dismissed = JSON.parse(localStorage.getItem('sharq_dismissed') || '[]');
 let seen = JSON.parse(localStorage.getItem('sharq_seen') || '[]');
+
+if (Array.isArray(applied)) {
+  const o = {}; applied.forEach(id => o[id] = 'earlier'); applied = o;
+}
+
+function save() {
+  localStorage.setItem('sharq_applied', JSON.stringify(applied));
+  localStorage.setItem('sharq_dismissed', JSON.stringify(dismissed));
+  localStorage.setItem('sharq_seen', JSON.stringify(seen));
+}
 
 async function load() {
   const res = await fetch('jobs.json?ts=' + Date.now());
   const data = await res.json();
   allJobs = data.jobs;
-  $('#updated').textContent = 'Last patrol: ' + data.updated;
+  $('#updated').textContent = 'Last patrol — ' + data.updated;
   render();
 }
 
-function render() {
-  let list = allJobs;
-  if (filter === 'new') list = list.filter(j => j.status === 'new' && !seen.includes(j.id));
-  else if (filter !== 'all') list = list.filter(j => j.category === filter);
-
-  const newCount = allJobs.filter(j => j.status === 'new' && !seen.includes(j.id)).length;
-  $('#stats').innerHTML = `<span><b>${allJobs.length}</b> in the water</span><span><b>${newCount}</b> fresh</span><span><b>${applied.length}</b> caught</span>`;
-
-  $('#jobs').innerHTML = list.length ? list.map(j => {
-    const isNew = j.status === 'new' && !seen.includes(j.id);
-    const hasApplied = applied.includes(j.id);
-    return `<div class="card ${isNew ? 'fresh' : ''}" data-id="${j.id}">
-      <div class="card-top">
-        <div><h2>${j.title}</h2><div class="company">${j.company}</div></div>
-        ${isNew ? '<span class="badge new">FRESH</span>' : hasApplied ? '<span class="badge applied">CAUGHT</span>' : ''}
-      </div>
-      <div class="meta"><span>📍 ${j.location}</span><span class="pay">${j.pay}</span><span>🗓 ${j.added}</span></div>
-      <div class="fit">${j.fit}</div>
-      <div class="actions">
-        <a class="btn btn-apply" href="${j.link}" target="_blank" rel="noopener">Strike →</a>
-        ${hasApplied ? '' : `<button class="btn btn-mark" onclick="markApplied('${j.id}')">Mark caught</button>`}
-      </div>
-    </div>`;
-  }).join('') : '<div id="empty">Quiet waters here.<br>Fresh catches surface after the daily 2 PM patrol.</div>';
-
-  seen = [...new Set([...seen, ...list.map(j => j.id)])];
-  localStorage.setItem('sharq_seen', JSON.stringify(seen));
+function cardHtml(j, mode) {
+  const isNew = j.status === 'new' && !seen.includes(j.id);
+  const badge = mode === 'caught' ? '<span class="badge applied">Caught</span>'
+              : mode === 'dismissed' ? '<span class="badge dead">Released</span>'
+              : isNew ? '<span class="badge new">Fresh</span>' : '';
+  let actions = '';
+  if (mode === 'hunt') {
+    actions = `<a class="btn btn-apply" href="${j.link}" target="_blank" rel="noopener">Strike →</a>
+      <button class="btn btn-mark" onclick="markCaught('${j.id}')">Mark caught</button>
+      <button class="btn btn-dismiss" onclick="dismiss('${j.id}')" title="Not interested">✕</button>`;
+  } else if (mode === 'caught') {
+    actions = `<a class="btn btn-apply" href="${j.link}" target="_blank" rel="noopener">View posting →</a>
+      <button class="btn btn-restore" onclick="restore('${j.id}')">Back to hunt</button>`;
+  } else {
+    actions = `<button class="btn btn-restore" style="flex:1" onclick="restore('${j.id}')">Throw back in the water</button>`;
+  }
+  const caughtLine = mode === 'caught' ? `<span>Caught ${applied[j.id] || ''}</span>` : '';
+  return `<div class="card ${mode === 'hunt' && isNew ? 'fresh' : ''}">
+    <div class="card-top">
+      <div><h2>${j.title}</h2><div class="company">${j.company}</div></div>
+      ${badge}
+    </div>
+    <div class="meta"><span>📍 ${j.location}</span><span class="pay">${j.pay}</span><span>Added ${j.added}</span>${caughtLine}</div>
+    <div class="fit">${j.fit}</div>
+    <div class="actions">${actions}</div>
+  </div>`;
 }
 
-function markApplied(id) {
-  applied.push(id);
-  localStorage.setItem('sharq_applied', JSON.stringify(applied));
+function render() {
+  const hunting = allJobs.filter(j => !(j.id in applied) && !dismissed.includes(j.id));
+  const caught = allJobs.filter(j => j.id in applied);
+  const released = allJobs.filter(j => dismissed.includes(j.id));
+
+  $('#c-hunt').textContent = hunting.length;
+  $('#c-caught').textContent = caught.length;
+  $('#c-dismissed').textContent = released.length;
+
+  const newCount = hunting.filter(j => j.status === 'new' && !seen.includes(j.id)).length;
+  $('#stats').innerHTML =
+    `<div class="stat"><b>${allJobs.length}</b>In water</div>` +
+    `<div class="stat hot"><b>${newCount}</b>Fresh</div>` +
+    `<div class="stat"><b>${caught.length}</b>Caught</div>`;
+
+  $('#filters').classList.toggle('hidden', tab !== 'hunt');
+
+  let html = '';
+  if (tab === 'hunt') {
+    let list = hunting;
+    if (filter === 'new') list = list.filter(j => j.status === 'new' && !seen.includes(j.id));
+    else if (filter !== 'all') list = list.filter(j => j.category === filter);
+    html = list.length ? list.map(j => cardHtml(j, 'hunt')).join('')
+      : '<div id="empty">Quiet waters here.<br>Fresh catches surface after the daily 2 PM patrol.</div>';
+    seen = [...new Set([...seen, ...list.map(j => j.id)])];
+  } else if (tab === 'caught') {
+    html = caught.length ? caught.map(j => cardHtml(j, 'caught')).join('')
+      : '<div id="empty">Nothing caught yet.<br>Hit a posting, apply, then tap Mark caught.</div>';
+  } else {
+    html = released.length ? released.map(j => cardHtml(j, 'dismissed')).join('')
+      : '<div id="empty">No releases.<br>Jobs you dismiss with ✕ wash up here.</div>';
+  }
+  $('#jobs').innerHTML = html;
+  save();
+}
+
+function markCaught(id) {
+  applied[id] = new Date().toISOString().slice(0, 10);
   toast('Caught — nice strike!');
+  render();
+}
+function dismiss(id) {
+  dismissed.push(id);
+  toast('Released back into the water');
+  render();
+}
+function restore(id) {
+  delete applied[id];
+  dismissed = dismissed.filter(x => x !== id);
+  toast('Back in the hunt');
   render();
 }
 
@@ -193,15 +358,25 @@ document.querySelectorAll('.chip').forEach(c => c.onclick = () => {
   render();
 });
 
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  tab = t.dataset.tab;
+  render();
+});
+
 // ---------- PWA + Push ----------
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('firebase-messaging-sw.js');
 }
 
-const pushConfigured = !firebaseConfig.apiKey.includes('PASTE');
-if (pushConfigured && 'Notification' in window && Notification.permission === 'default') {
-  $('#push-banner').style.display = 'flex';
+function maybeShowPushBanner() {
+  const ok = 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
+  if (ok && Notification.permission === 'default') {
+    $('#push-banner').style.display = 'flex';
+  }
 }
+maybeShowPushBanner();
 
 $('#enable-push').onclick = async () => {
   try {
