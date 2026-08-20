@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#b6b7bf">
 <title>Sharq — Job Hunt Tracker</title>
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
   :root {
     --steel: #b6b7bf;
@@ -38,7 +38,7 @@
     padding: 16px 16px 12px;
   }
   .brand { display:flex; align-items:center; gap:12px; }
-  .brand svg { flex: 0 0 auto; }
+  .brand img { flex: 0 0 auto; }
   h1 {
     font-size: 30px; font-weight: 900; letter-spacing: 0.04em;
     text-transform: uppercase; line-height: 1;
@@ -187,12 +187,7 @@
 <body>
 <header>
   <div class="brand">
-    <svg width="40" height="40" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="60" height="60" fill="#0019e3" stroke="#0b0b10" stroke-width="3"/>
-      <path d="M10 44 Q23 14 39 12 Q33 25 37 33 Q45 29 54 31 Q46 42 34 46 Q20 50 10 44 Z" fill="#f2f2f4"/>
-      <circle cx="24" cy="37" r="2.4" fill="#0b0b10"/>
-      <path d="M8 51 Q18 46 28 51 T48 51" stroke="#b6b7bf" stroke-width="3" fill="none" stroke-linecap="round"/>
-    </svg>
+    <img src="icons/logo.png" alt="Sharq logo" width="44" height="44" style="border:2px solid var(--ink); background:var(--steel); object-fit:contain;">
     <div>
       <h1>Shar<span class="q">q</span></h1>
       <div class="tagline">Smell opportunity in the water</div>
@@ -246,6 +241,7 @@ let allJobs = [], filter = 'all', tab = 'hunt';
 let applied = JSON.parse(localStorage.getItem('sharq_applied') || '{}');
 let dismissed = JSON.parse(localStorage.getItem('sharq_dismissed') || '[]');
 let seen = JSON.parse(localStorage.getItem('sharq_seen') || '[]');
+let deleted = JSON.parse(localStorage.getItem('sharq_deleted') || '[]');
 
 if (Array.isArray(applied)) {
   const o = {}; applied.forEach(id => o[id] = 'earlier'); applied = o;
@@ -260,7 +256,7 @@ function save() {
 async function load() {
   const res = await fetch('jobs.json?ts=' + Date.now());
   const data = await res.json();
-  allJobs = data.jobs;
+  allJobs = data.jobs.filter(j => !deleted.includes(j.id));
   $('#updated').textContent = 'Last patrol — ' + data.updated;
   render();
 }
@@ -279,7 +275,8 @@ function cardHtml(j, mode) {
     actions = `<a class="btn btn-apply" href="${j.link}" target="_blank" rel="noopener">View posting →</a>
       <button class="btn btn-restore" onclick="restore('${j.id}')">Back to hunt</button>`;
   } else {
-    actions = `<button class="btn btn-restore" style="flex:1" onclick="restore('${j.id}')">Throw back in the water</button>`;
+    actions = `<button class="btn btn-restore" style="flex:1" onclick="restore('${j.id}')">Throw back in the water</button>
+      <button class="btn btn-dismiss" onclick="deleteForever('${j.id}')" title="Delete permanently">🗑</button>`;
   }
   const caughtLine = mode === 'caught' ? `<span>Caught ${applied[j.id] || ''}</span>` : '';
   return `<div class="card ${mode === 'hunt' && isNew ? 'fresh' : ''}">
@@ -337,6 +334,14 @@ function markCaught(id) {
 function dismiss(id) {
   dismissed.push(id);
   toast('Released back into the water');
+  render();
+}
+function deleteForever(id) {
+  if (!confirm('Delete this posting permanently? It will not come back, even in Released.')) return;
+  dismissed = dismissed.filter(x => x !== id);
+  deleted.push(id);
+  localStorage.setItem('sharq_deleted', JSON.stringify(deleted));
+  toast('Deleted for good');
   render();
 }
 function restore(id) {
