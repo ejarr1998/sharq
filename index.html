@@ -396,15 +396,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-function maybeShowPushBanner() {
-  const ok = 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
-  if (ok && Notification.permission === 'default') {
-    $('#push-banner').style.display = 'flex';
-  }
-}
-maybeShowPushBanner();
-
-$('#enable-push').onclick = async () => {
+async function fetchAndShowToken() {
   try {
     firebase.initializeApp(firebaseConfig);
     const messaging = firebase.messaging();
@@ -423,7 +415,21 @@ $('#enable-push').onclick = async () => {
     $('#token-panel').style.display = 'block';
     toast('Push setup failed — see panel');
   }
-};
+}
+
+function maybeShowPushBanner() {
+  const ok = 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
+  if (!ok) return;
+  if (Notification.permission === 'default') {
+    $('#push-banner').style.display = 'flex';
+  } else if (Notification.permission === 'granted') {
+    // already allowed earlier — just fetch and show the token
+    fetchAndShowToken();
+  }
+}
+maybeShowPushBanner();
+
+$('#enable-push').onclick = fetchAndShowToken;
 
 $('#copy-token').onclick = () => {
   const t = $('#token-text');
