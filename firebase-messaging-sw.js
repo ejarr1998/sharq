@@ -14,15 +14,8 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(payload => {
-  const { title, body } = payload.notification || {};
-  self.registration.showNotification(title || 'Sharq', {
-    body: body || 'Fresh job matches surfaced!',
-    icon: 'icons/icon-192.png',
-    badge: 'icons/icon-192.png',
-    data: { url: self.location.origin + self.location.pathname.replace('firebase-messaging-sw.js', '') }
-  });
-});
+// FCM SDK displays notification payloads automatically (single notification).
+// onBackgroundMessage intentionally omitted to avoid duplicate display.
 
 self.addEventListener('notificationclick', e => {
   e.notification.close();
@@ -30,7 +23,7 @@ self.addEventListener('notificationclick', e => {
 });
 
 // Offline caching
-const CACHE = 'sharq-v8';
+const CACHE = 'sharq-v9';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', 'index.html', 'jobs.json', 'manifest.json'])));
   self.skipWaiting();
