@@ -260,11 +260,28 @@ function save() {
 }
 
 async function load() {
-  const res = await fetch('jobs.json?ts=' + Date.now());
-  const data = await res.json();
-  allJobs = data.jobs.filter(j => !deleted.includes(j.id));
-  $('#updated').textContent = 'Last patrol — ' + data.updated;
+  try {
+    const res = await fetch('jobs.json?ts=' + Date.now());
+    const data = await res.json();
+    allJobs = (data.jobs || []).filter(j => !deleted.includes(j.id));
+    $('#updated').textContent = 'Last patrol — ' + data.updated;
+  } catch (e) {
+    $('#updated').textContent = 'LOAD ERROR: ' + e.message;
+  }
   render();
+  diag();
+}
+
+function diag() {
+  let d = document.getElementById('diag');
+  if (!d) {
+    d = document.createElement('div');
+    d.id = 'diag';
+    d.style.cssText = 'font-size:10px;color:var(--ink-soft);padding:6px 16px;word-break:break-all;';
+    document.body.appendChild(d);
+  }
+  const perm = ('Notification' in window) ? Notification.permission : 'unsupported';
+  d.textContent = `debug — jobs:${allJobs.length} perm:${perm} sw:${'serviceWorker' in navigator} push:${'PushManager' in window} standalone:${window.matchMedia('(display-mode: standalone)').matches}`;
 }
 
 function cardHtml(j, mode) {
