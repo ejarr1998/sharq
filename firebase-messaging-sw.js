@@ -18,8 +18,8 @@ messaging.onBackgroundMessage(payload => {
   const { title, body } = payload.notification || {};
   self.registration.showNotification(title || 'Sharq', {
     body: body || 'Fresh job matches surfaced!',
-    icon: 'icons/icon-192.png',
-    badge: 'icons/icon-192.png',
+    icon: 'icons/icon.svg',
+    badge: 'icons/icon.svg',
     data: { url: self.location.origin + self.location.pathname.replace('firebase-messaging-sw.js', '') }
   });
 });
@@ -37,6 +37,7 @@ self.addEventListener('install', e => {
 });
 self.addEventListener('fetch', e => {
   if (e.request.url.includes('jobs.json')) {
+    // network-first for job data
     e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
   } else if (e.request.mode === 'navigate' || e.request.destination) {
     e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
