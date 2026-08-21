@@ -1,4 +1,101 @@
 {
-  "updated": "2026-08-20 (ET)",
-  "jobs": []
+  "updated": "2026-08-21 (ET)",
+  "jobs": [
+    {
+      "id": "itron-jr102846",
+      "title": "Implementation Consultant (Functional/Project Lead)",
+      "company": "Itron",
+      "location": "Remote — US (Indiana listed), up to 50% travel",
+      "pay": "Not listed (agg. est. $100k–$156k)",
+      "added": "2026-08-21",
+      "fit": "Utility SaaS deployments asking 3+ yrs — posted Aug 19 and Indiana is an explicit location; your app-support + customer-facing background maps straight onto the functional lead workstream.",
+      "link": "https://itron.wd5.myworkdayjobs.com/Itron/job/United-States-of-America-Illinois-Chicago/Implementation-Consultant_JR102846",
+      "category": "implementation",
+      "status": "new"
+    },
+    {
+      "id": "itron-jr102458",
+      "title": "Technical Implementation Consultant",
+      "company": "Itron",
+      "location": "Remote — US, up to 25% travel",
+      "pay": "Not listed",
+      "added": "2026-08-21",
+      "fit": "Only 2+ yrs asked for hands-on SSO/API/data-migration config work for utility customers — your web dev degree plus 5 yrs troubleshooting enterprise apps is the exact profile.",
+      "link": "https://itron.wd5.myworkdayjobs.com/en-US/Itron/job/Technical-Implementation-Consultant_JR102458-2",
+      "category": "implementation",
+      "status": "new"
+    },
+    {
+      "id": "samsara-8079982",
+      "title": "Enterprise Core Implementation Consultant",
+      "company": "Samsara",
+      "location": "Remote — US",
+      "pay": "$88,979–$134,590 base",
+      "added": "2026-08-21",
+      "fit": "Asks 4+ yrs customer-facing SaaS — your 5 yrs enterprise support translates directly; IoT platform serving field ops/transportation, refreshed on the board Aug 20.",
+      "link": "https://www.samsara.com/company/careers/roles/8079982?gh_jid=8079982",
+      "category": "implementation",
+      "status": "new"
+    },
+    {
+      "id": "adastra-1912",
+      "title": "IFS Business Analyst — Finance, Projects, FSM & HR",
+      "company": "Ad Astra Resource Group (client)",
+      "location": "Grand Prairie, TX — North America-based",
+      "pay": "$115,000–$130,000",
+      "added": "2026-08-21",
+      "fit": "Direct-hire BA on a brand-new IFS Cloud program where FSM is a named workstream — your MWM/field-service domain knowledge is the differentiator, and pay beats target.",
+      "link": "https://www.adastraresourcegroup.com/jobs/ifs-analyst/",
+      "category": "ifs",
+      "status": "new"
+    },
+    {
+      "id": "adastra-2005",
+      "title": "IFS Cloud AP/AR Support Analyst",
+      "company": "Ad Astra Resource Group (client)",
+      "location": "Remote — US, contract",
+      "pay": "Contract — rate not listed",
+      "added": "2026-08-21",
+      "fit": "Post-go-live IFS Cloud support and user training for a finance team — pure application-support work in your IFS wheelhouse, fully remote, posted Aug 20.",
+      "link": "https://www.adastraresourcegroup.com/jobs/ifs-cloud-ap-ar-support-analyst/",
+      "category": "ifs",
+      "status": "new"
+    },
+    {
+      "id": "adastra-1914",
+      "title": "IFS Application Support Analyst (Apps 7 / Cloud)",
+      "company": "Ad Astra Resource Group (client)",
+      "location": "Remote — US only, 6-month contract",
+      "pay": "Contract — rate not listed",
+      "added": "2026-08-21",
+      "fit": "Production support for a complex IFS ERP environment — troubleshooting, end-user support, reporting; a remote contract that is literally your current job description.",
+      "link": "https://www.adastraresourcegroup.com/jobs/ifs-support-apps-7-and-cloud/",
+      "category": "ifs",
+      "status": "new"
+    },
+    {
+      "id": "barrett-integration-support",
+      "title": "Integration Support Analyst (EDI & API)",
+      "company": "Barrett Distribution Centers",
+      "location": "Remote — US, M–F 8–5",
+      "pay": "$70,000–$90,000",
+      "added": "2026-08-21",
+      "fit": "Day-to-day PROD support for EDI/API integrations (NetSuite, CLEO) asking 3+ yrs app/production support — squarely in your $70–90k target with only 5–10% travel.",
+      "link": "https://www.indeed.com/viewjob?jk=b8edb894920f7e65",
+      "category": "support",
+      "status": "new"
+    },
+    {
+      "id": "entravision-ai-enablement",
+      "title": "AI Enablement & Adoption Analyst",
+      "company": "Entravision (via Ledgent Technology)",
+      "location": "Remote — US",
+      "pay": "$90,000/yr",
+      "added": "2026-08-21",
+      "fit": "Drive Claude/Gemini adoption, build training, and prototype low-code AI tools — a support-pro-turned-enablement role at the top of your range; web dev chops cover the prototyping.",
+      "link": "https://www.careerbuilder.com/job-details/ai-enablement-adoption-analyst-santa-monica-ca--e099b451-378c-473d-a9bd-08f9ddbbace1",
+      "category": "ai",
+      "status": "new"
+    }
+  ]
 }
