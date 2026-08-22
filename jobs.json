@@ -1,6 +1,78 @@
 {
-  "updated": "2026-08-21 (ET)",
+  "updated": "2026-08-22 (ET)",
   "jobs": [
+    {
+      "id": "adastra-2011",
+      "title": "IFS Cloud Finance SME — AR/AP (Post-Go-Live Support)",
+      "company": "Ad Astra Resource Group (client)",
+      "location": "Remote — US, contract (~40 hrs/wk, runs through Thanksgiving)",
+      "pay": "Contract — rate not listed",
+      "added": "2026-08-22",
+      "fit": "Fresh Aug 21 — hands-on functional support, training, and root-cause issue resolution for AR/AP teams after an IFS Cloud go-live; interviews start Monday Aug 24, so strike fast.",
+      "link": "https://www.adastraresourcegroup.com/jobs/ifs-finance-support-ar-ap/",
+      "category": "ifs",
+      "status": "new"
+    },
+    {
+      "id": "adastra-1862",
+      "title": "IFS Cloud Trainer / Change Management Consultant",
+      "company": "Ad Astra Resource Group (client)",
+      "location": "Remote — US, 3-month contract",
+      "pay": "Contract — rate not listed",
+      "added": "2026-08-22",
+      "fit": "Turn Apps 9 procedures into IFS Cloud documentation and deliver virtual end-user training for a migration — your daily support/training work packaged as a remote contract.",
+      "link": "https://www.adastraresourcegroup.com/jobs/ifs-trainer-change-management-consultant/",
+      "category": "ifs",
+      "status": "new"
+    },
+    {
+      "id": "inceed-ifs-support",
+      "title": "IFS Application Support Analyst",
+      "company": "Inceed (client)",
+      "location": "Remote — US (Denver preferred), 6-month contract with conversion potential",
+      "pay": "$38–$54/hr",
+      "added": "2026-08-22",
+      "fit": "First/second-line IFS 10/Cloud support in a brand-new Centre of Excellence — asks 3+ yrs IFS plus 5+ yrs app support, which is your exact profile; refreshed on boards Aug 20.",
+      "link": "https://www.talent.com/view?id=618328213366510245",
+      "category": "ifs",
+      "status": "new"
+    },
+    {
+      "id": "stellent-ifs-mwm-ba",
+      "title": "Business Analyst — IFS MWM (Remote, W2)",
+      "company": "Stellent IT (client)",
+      "location": "Remote — US (Detroit-area client), W2 contract",
+      "pay": "Not listed",
+      "added": "2026-08-22",
+      "fit": "BA on an IFS MWM deployment spanning field operations, meter reading, and revenue management — fit-gap analysis and requirements traceability where your MWM domain knowledge stands out.",
+      "link": "https://www.ziprecruiter.com/c/Stellent-IT-LLC/Job/Business-Analyst-%7C-Remote-%7C-W2/-in-Remote,US?jid=bfaaba5b2a7f508a",
+      "category": "ifs",
+      "status": "new"
+    },
+    {
+      "id": "usic-app-support",
+      "title": "Application Support Analyst",
+      "company": "USIC",
+      "location": "Remote — US (Indianapolis HQ), EST hours",
+      "pay": "$70,000–$80,000",
+      "added": "2026-08-22",
+      "fit": "Utility-locator headquartered in Indy hiring remote application support dead-center of your $70–90k target — hometown company, utility domain, pure support work.",
+      "link": "https://us.expertini.com/job/application-support-analyst-indianapolis-usic-21f350475d4f45cb876b88ea3183a7d2105/",
+      "category": "support",
+      "status": "new"
+    },
+    {
+      "id": "clearstar-ai-ba",
+      "title": "Business Analyst — Automation & AI Enablement",
+      "company": "ClearStar",
+      "location": "Remote — US (Indiana explicitly eligible)",
+      "pay": "$90,000–$120,000",
+      "added": "2026-08-22",
+      "fit": "Enterprise process mapping, requirements gathering, and AI-tooling awareness asking 3–5 yrs — your support-analysis background fits, Indiana is eligible, and pay clears target.",
+      "link": "https://ats.rippling.com/clearstar/jobs/c843fd65-0b5b-4550-ab4e-01b17f562bb8",
+      "category": "ai",
+      "status": "new"
+    },
     {
       "id": "itron-jr102846",
       "title": "Implementation Consultant (Functional/Project Lead)",
