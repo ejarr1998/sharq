@@ -1,6 +1,54 @@
 {
-  "updated": "2026-08-22 (ET)",
+  "updated": "2026-08-23 (ET)",
   "jobs": [
+    {
+      "id": "kong-ai-enablement-fe",
+      "title": "AI Enablement Specialist (FE)",
+      "company": "Kong",
+      "location": "Remote — US",
+      "pay": "$77,840–$111,200",
+      "added": "2026-08-23",
+      "fit": "Entry-level seat on Kong's brand-new internal AI enablement team — map workflows, build prompt-based automations and lightweight apps, coach business users; asks just 2–3 yrs plus daily AI-tool use and any coding background, so 5 yrs support + web dev degree overshoots the bar. Reposted Aug 21.",
+      "link": "https://builtin.com/job/ai-enablement-specialist-fe/10102674",
+      "category": "ai",
+      "status": "new"
+    },
+    {
+      "id": "kong-sr-ai-enablement-fe",
+      "title": "Senior AI Enablement Specialist — FE",
+      "company": "Kong",
+      "location": "Remote — US",
+      "pay": "$94,150–$135,000",
+      "added": "2026-08-23",
+      "fit": "Stretch twin of the same new Kong function — 5+ yrs technical/cross-functional work, coaching users, and proof of AI automations that changed how work gets done; your 5 yrs enterprise support plus hands-on AI builds (this tracker included) is the pitch, and pay clears target. Reposted Aug 21.",
+      "link": "https://www.tealhq.com/job/senior-ai-enablement-specialist_7ea1a68b3b15bd631f5f56bbb31b4bdc35ff1",
+      "category": "ai",
+      "status": "new"
+    },
+    {
+      "id": "evercommerce-sf-impl",
+      "title": "Salesforce Implementation Consultant (EverPro / improveit 360)",
+      "company": "EverCommerce",
+      "location": "Remote — US (occasional customer/Denver travel)",
+      "pay": "$70,000–$85,000",
+      "added": "2026-08-23",
+      "fit": "Implement and configure a Salesforce-based CRM for home/field-service contractors — onboarding, workflow config, troubleshooting, training; asks 2+ yrs customer-facing plus 6 months Salesforce admin, dead-center of your $70–90k band. Refreshed on boards Aug 19–22.",
+      "link": "https://builtin.com/job/everpro-salesforce-implementation-consultant-remote-us/10771405",
+      "category": "implementation",
+      "status": "new"
+    },
+    {
+      "id": "iuhealth-apps-analyst-sr",
+      "title": "Applications Analyst — Senior",
+      "company": "Indiana University Health",
+      "location": "Indianapolis, IN — on-site (System Services, 350 W 11th St)",
+      "pay": "Not listed",
+      "added": "2026-08-23",
+      "fit": "The local option — configure, maintain, and support hospital information systems and clinical apps for Indiana's largest health system; asks 5–7 yrs and you're at 5, a straight shot down I-69 from Noblesville if you want an on-site foot in the door. Posted Aug 18, still flagged new.",
+      "link": "https://careers.iuhealth.org/jobs/18133888-applications-analyst-senior",
+      "category": "support",
+      "status": "new"
+    },
     {
       "id": "adastra-2011",
       "title": "IFS Cloud Finance SME — AR/AP (Post-Go-Live Support)",
