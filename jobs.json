@@ -1,6 +1,54 @@
 {
-  "updated": "2026-08-23 (ET)",
+  "updated": "2026-08-24 (ET)",
   "jobs": [
+    {
+      "id": "adastra-1750",
+      "title": "Senior IFS Cloud Business Analyst (Techno/Functional)",
+      "company": "Ad Astra Resource Group (client)",
+      "location": "US-based — client in Midland, TX (relo assistance available)",
+      "pay": "$125,000–$150,000",
+      "added": "2026-08-24",
+      "fit": "Direct-hire seat on a brand-new IFS Cloud implementation — requirements, config support, SIT/UAT, data migration, and reporting across Finance, Supply Chain, Projects, and Maintenance; asks 5+ yrs hands-on IFS, right at your level, and pay far clears target. Shortlists being finalized now.",
+      "link": "https://www.adastraresourcegroup.com/jobs/ifs-sr-business-analyst-techno-functional/",
+      "category": "ifs",
+      "status": "new"
+    },
+    {
+      "id": "chevin-impl-consultant",
+      "title": "Implementation Consultant",
+      "company": "Chevin Fleet Solutions",
+      "location": "Remote — US",
+      "pay": "Not listed",
+      "added": "2026-08-24",
+      "fit": "Configure integrations, migrate data, and run testing and go-lives for a fleet-management platform — field-ops software in the Samsara neighborhood, refreshed on boards Aug 23; your support background maps straight onto onboarding and troubleshooting work.",
+      "link": "https://www.ziprecruiter.com/c/Chevin-Fleet-Solutions/Job/Implementation-Consultant/-in-Remote,US?jid=8fb83ac97f1c2774",
+      "category": "implementation",
+      "status": "new"
+    },
+    {
+      "id": "bhsg-ba-indy",
+      "title": "Business Analyst (Application Support)",
+      "company": "Beacon Hill (client)",
+      "location": "Indianapolis, IN — direct hire",
+      "pay": "Not listed",
+      "added": "2026-08-24",
+      "fit": "Local direct-hire blending requirements gathering with hands-on application support for key enterprise systems — asks an IT degree plus 2+ yrs with SQL/Jira a plus, an easy commute from Noblesville. Posted Aug 13.",
+      "link": "https://bhsg.com/jobs/job/tt202621-cpc_1786654488-business-analyst-indianapolis-indiana/",
+      "category": "support",
+      "status": "new"
+    },
+    {
+      "id": "loftware-ai-enablement",
+      "title": "AI Transformation & Enablement Analyst",
+      "company": "Loftware",
+      "location": "Remote — US (EST hours)",
+      "pay": "$95,000–$150,000",
+      "added": "2026-08-24",
+      "fit": "Drive internal AI-tool rollout and adoption plus AI-powered SaaS features alongside product and customer-success teams — the support-pro-to-AI-enablement pivot at an enterprise labeling-software leader; EST hours suit Indiana. Posted Aug 12, still open.",
+      "link": "https://builtin.com/job/ai-transformation-enablement-analyst/9523619",
+      "category": "ai",
+      "status": "new"
+    },
     {
       "id": "kong-ai-enablement-fe",
       "title": "AI Enablement Specialist (FE)",
