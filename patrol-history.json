@@ -1,0 +1,30 @@
+{
+  "note": "Every job id the patrol has ever surfaced. Never re-add these ids to jobs.json.",
+  "ids": [
+    "adastra-1750",
+    "adastra-1862",
+    "adastra-1912",
+    "adastra-1914",
+    "adastra-2005",
+    "adastra-2011",
+    "barrett-integration-support",
+    "bhsg-ba-indy",
+    "chevin-impl-consultant",
+    "clearstar-ai-ba",
+    "entravision-ai-enablement",
+    "evercommerce-sf-impl",
+    "inceed-ifs-support",
+    "itron-jr102458",
+    "itron-jr102846",
+    "iuhealth-apps-analyst-sr",
+    "jabil-j2459865",
+    "kong-ai-enablement-fe",
+    "kong-sr-ai-enablement-fe",
+    "loftware-ai-enablement",
+    "rh-ifs-cloud-consultant-5996",
+    "samsara-8079982",
+    "stellent-ifs-mwm-ba",
+    "t2-product-support-analyst",
+    "usic-app-support"
+  ]
+}
