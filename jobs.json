@@ -1,6 +1,42 @@
 {
-  "updated": "2026-08-24 (ET)",
+  "updated": "2026-08-25 (ET)",
   "jobs": [
+    {
+      "id": "rh-ifs-cloud-consultant-5996",
+      "title": "IFS Cloud Consultant (Functional — Implementation & User Enablement)",
+      "company": "Robert Half (client)",
+      "location": "Remote — US (client in Twinsburg, OH), long-term contract",
+      "pay": "Contract — rate not listed",
+      "added": "2026-08-25",
+      "fit": "Fresh Aug 20 — functional consulting on a cloud ERP implementation: requirements, config recommendations, integrations, reporting, and user enablement; your 5 yrs IFS support + stakeholder work is the core of the ask.",
+      "link": "https://www.roberthalf.com/us/en/job/twinsburg-oh/ifs-cloud-consultant/03340-0013475996-usen",
+      "category": "ifs",
+      "status": "new"
+    },
+    {
+      "id": "jabil-j2459865",
+      "title": "Procurement Automation & AI Solutions Analyst",
+      "company": "Jabil",
+      "location": "Remote — US (St. Petersburg/Tampa, FL listed)",
+      "pay": "$79,400–$142,900",
+      "added": "2026-08-25",
+      "fit": "Posted Aug 17 — identify and build AI-driven procurement automations and solutions across a global manufacturer; remote US with pay clearing target, and the support-to-solutions pivot fits your app-support + web dev background.",
+      "link": "https://jobs.jabil.com/en/job/washington/procurement-automation-and-ai-solutions-analyst/626/99025049744",
+      "category": "ai",
+      "status": "new"
+    },
+    {
+      "id": "t2-product-support-analyst",
+      "title": "Product Support Analyst",
+      "company": "T2 Systems",
+      "location": "Indianapolis, IN — on-site (HQ)",
+      "pay": "Not listed",
+      "added": "2026-08-25",
+      "fit": "Posted Aug 21 — break/fix support for T2's parking/mobility SaaS (Flex PE): case ownership, troubleshooting, escalation, and knowledge-base work at an Indy-HQ field-ops software company, ~30 min from Noblesville.",
+      "link": "https://www.parking.net/parking-jobs/t2-systems-inc/product-support-analyst-indianapolis-us-12",
+      "category": "support",
+      "status": "new"
+    },
     {
       "id": "adastra-1750",
       "title": "Senior IFS Cloud Business Analyst (Techno/Functional)",
