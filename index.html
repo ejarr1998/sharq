@@ -129,11 +129,19 @@
   #clear-bar span { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
   header { position: relative; }
   #btn-account {
-    position: absolute; top: 14px; right: 14px; width: 42px; height: 42px;
+    position: absolute; top: 16px; right: 16px; width: 40px; height: 40px;
     border: 2px solid var(--ink); background: var(--paper); color: var(--ink);
-    font-size: 19px; cursor: pointer; border-radius: 0; line-height: 1;
+    font-size: 18px; cursor: pointer; border-radius: 0; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; padding: 0;
   }
-  #btn-account.signed { background: var(--volt); color: #fff; border-color: var(--volt); box-shadow: 3px 3px 0 var(--ink); }
+  #btn-account img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #btn-account.signed { border-color: var(--volt); box-shadow: 2px 2px 0 var(--volt); }
+  #btn-account .initial {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    background: var(--volt); color: #fff; font-size: 17px; font-weight: 900;
+    font-family: 'Arial Narrow', -apple-system, Arial, sans-serif;
+  }
   #account-panel {
     position: absolute; top: 62px; right: 12px; z-index: 70; width: 240px;
     background: var(--paper); border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--ink);
@@ -494,10 +502,17 @@ function renderAccount() {
     $('#acct-who').textContent = 'Signed in as ' + esc(user.displayName || user.email || 'you') + ' — devices synced';
     $('#btn-auth').textContent = 'Sign out';
     $('#btn-account').classList.add('signed');
+    if (user.photoURL) {
+      $('#btn-account').innerHTML = '<img src="' + esc(user.photoURL) + '" alt="">';
+    } else {
+      const initial = esc((user.displayName || user.email || '?').trim().charAt(0).toUpperCase());
+      $('#btn-account').innerHTML = '<span class="initial">' + initial + '</span>';
+    }
   } else {
     $('#acct-who').textContent = 'Not signed in — sign in to open your waters';
     $('#btn-auth').textContent = 'Sign in with Google';
     $('#btn-account').classList.remove('signed');
+    $('#btn-account').innerHTML = '&#128100;';
   }
   const t = $('#btn-push-toggle');
   if (!pushSupported()) {
