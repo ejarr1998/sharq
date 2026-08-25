@@ -23,19 +23,49 @@ self.addEventListener('notificationclick', e => {
 });
 
 // Offline caching
-const CACHE = 'sharq-v15';
+const CACHE = 'sharq-v16';
+const PRECACHE = ['./', 'index.html', 'jobs.json', 'manifest.json'];
+
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', 'index.html', 'jobs.json', 'manifest.json'])));
-  self.skipWaiting();
+  e.waitUntil(
+    caches.open(CACHE).then(c =>
+      // fetch fresh from network, bypassing HTTP cache, so a new version
+      // never bakes a stale copy of the app into its own cache
+      Promise.all(PRECACHE.map(u =>
+        fetch(u + '?sw=' + CACHE, { cache: 'no-cache' })
+          .then(r => c.put(u, r))
+      ))
+    ).then(() => self.skipWaiting())
+  );
 });
+
 self.addEventListener('activate', e => {
-  e.waitUntil(self.clients.claim());
+  e.waitUntil(
+    // delete every old cache so stale versions are truly gone
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
 });
+
 self.addEventListener('fetch', e => {
-  if (e.request.url.includes('jobs.json')) {
+  const url = e.request.url;
+  if (e.request.mode === 'navigate') {
+    // network-first for the app shell: fresh code whenever online,
+    // cached copy only as an offline fallback
+    e.respondWith(
+      fetch(e.request).then(r => {
+        const copy = r.clone();
+        caches.open(CACHE).then(c => c.put('index.html', copy));
+        return r;
+      }).catch(() => caches.match(e.request).then(r => r || caches.match('index.html')))
+    );
+  } else if (url.includes('jobs.json')) {
     // network-first for job data
     e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-  } else if (e.request.mode === 'navigate' || e.request.destination) {
+  } else if (e.request.destination === 'image' || url.includes('manifest.json')) {
+    // icons and manifest: cache-first is fine, they rarely change
     e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
   }
+  // everything else (Firebase, Firestore, Google auth) goes straight to network
 });
