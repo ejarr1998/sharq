@@ -289,6 +289,17 @@ function save() {
 
 async function load() {
   try {
+    if (user && db) {
+      const snap = await db.collection('users').doc(user.uid).get();
+      const d = snap.exists ? snap.data() : {};
+      if (d.jobs) {
+        const parsed = JSON.parse(d.jobs);
+        allJobs = (parsed.jobs || []).filter(j => !deleted.includes(j.id));
+        $('#updated').textContent = 'Last patrol — ' + (parsed.updated || '');
+        render();
+        return;
+      }
+    }
     const res = await fetch('jobs.json?ts=' + Date.now());
     const data = await res.json();
     allJobs = (data.jobs || []).filter(j => !deleted.includes(j.id));
