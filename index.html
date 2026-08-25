@@ -64,18 +64,6 @@
   #stats .stat b { display:block; font-size: 20px; color: var(--ink); letter-spacing: 0; }
   #stats .stat.hot b { color: var(--volt); }
 
-  .filters {
-    display:flex; gap:8px; padding:12px 16px; overflow-x:auto;
-    scrollbar-width: none;
-  }
-  .filters::-webkit-scrollbar { display: none; }
-  .filters.hidden { display:none; }
-  .chip {
-    padding: 7px 14px; border: 2px solid var(--ink); background: var(--paper);
-    color: var(--ink); font-size: 11px; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 0.08em; cursor: pointer; white-space: nowrap; border-radius: 0;
-  }
-  .chip.active { background: var(--volt); color: #fff; border-color: var(--volt); box-shadow: 3px 3px 0 var(--ink); }
 
   #jobs { padding: 2px 16px 0; display:flex; flex-direction:column; gap:16px; max-width: 720px; margin: 0 auto; }
   .card {
@@ -139,14 +127,37 @@
     padding: 12px 16px;
   }
   #clear-bar span { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
-  #auth-area { margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  #auth-who { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); }
-  #btn-auth {
+  header { position: relative; }
+  #btn-account {
+    position: absolute; top: 14px; right: 14px; width: 42px; height: 42px;
     border: 2px solid var(--ink); background: var(--paper); color: var(--ink);
-    padding: 7px 14px; font-size: 10px; font-weight: 900; text-transform: uppercase;
-    letter-spacing: 0.1em; cursor: pointer; border-radius: 0; white-space: nowrap;
+    font-size: 19px; cursor: pointer; border-radius: 0; line-height: 1;
+  }
+  #btn-account.signed { background: var(--volt); color: #fff; border-color: var(--volt); box-shadow: 3px 3px 0 var(--ink); }
+  #account-panel {
+    position: absolute; top: 62px; right: 12px; z-index: 70; width: 240px;
+    background: var(--paper); border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--ink);
+    padding: 14px; display: none;
+  }
+  #account-panel.open { display: block; }
+  #acct-who { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); line-height: 1.5; margin-bottom: 10px; }
+  #btn-auth {
+    width: 100%; border: 2px solid var(--ink); background: var(--paper); color: var(--ink);
+    padding: 9px 14px; font-size: 10px; font-weight: 900; text-transform: uppercase;
+    letter-spacing: 0.1em; cursor: pointer; border-radius: 0;
   }
   #btn-auth:hover { background: var(--volt); color: #fff; border-color: var(--volt); }
+  #acct-push-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--ink);
+  }
+  #acct-push-row span { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+  #btn-push-toggle {
+    border: 2px solid var(--ink); background: var(--steel); color: var(--ink-soft);
+    padding: 6px 12px; font-size: 10px; font-weight: 900; letter-spacing: 0.1em;
+    cursor: pointer; border-radius: 0; min-width: 64px;
+  }
+  #btn-push-toggle.on { background: var(--volt); color: #fff; border-color: var(--volt); }
   #clear-bar button {
     background: var(--paper); color: var(--ink); border: 2px solid var(--paper);
     padding: 9px 16px; font-weight: 900; font-size: 11px; text-transform: uppercase;
@@ -215,24 +226,19 @@
   </div>
   <div id="updated">Circling…</div>
   <div id="stats"></div>
-  <div id="auth-area"></div>
+  <button id="btn-account" aria-label="Account options">&#128100;</button>
+  <div id="account-panel">
+    <div id="acct-who">Not signed in</div>
+    <button id="btn-auth">Sign in with Google</button>
+    <div id="acct-push-row"><span>Push alerts</span><button id="btn-push-toggle">ON</button></div>
+  </div>
 </header>
 
-<div id="push-banner">
-  <p>Enable push notifications and Sharq will ping your phone the moment fresh matches surface.</p>
-  <button id="enable-push">Enable</button>
-</div>
 
 
 
-<div class="filters" id="filters">
-  <div class="chip active" data-f="all">All waters</div>
-  <div class="chip" data-f="ifs">IFS / MWM</div>
-  <div class="chip" data-f="implementation">Implementation</div>
-  <div class="chip" data-f="support">App Support</div>
-  <div class="chip" data-f="ai">AI Roles</div>
-  <div class="chip" data-f="new">Fresh catches</div>
-</div>
+
+
 
 <div id="jobs"></div>
 
@@ -262,7 +268,7 @@ const VAPID_KEY = "BIFMG3wX0YVOLmFde6ckEbLfdiGhtGWICd9GLsm9UJiCQ3sUEjW52GF0FYMk1
 // =========================================
 
 const $ = s => document.querySelector(s);
-let allJobs = [], filter = 'all', tab = 'hunt';
+let allJobs = [], tab = 'hunt';
 let applied = JSON.parse(localStorage.getItem('sharq_applied') || '{}');
 let dismissed = JSON.parse(localStorage.getItem('sharq_dismissed') || '[]');
 let seen = JSON.parse(localStorage.getItem('sharq_seen') || '[]');
@@ -355,8 +361,6 @@ function render() {
     `<div class="stat hot"><b>${newCount}</b>Fresh</div>` +
     `<div class="stat"><b>${caught.length}</b>Caught</div>`;
 
-  $('#filters').classList.toggle('hidden', tab !== 'hunt' || !user);
-
   if (!authChecked) {
     $('#jobs').innerHTML = '<div id="empty">Checking sign-in…</div>';
     return;
@@ -376,8 +380,6 @@ function render() {
   let html = '';
   if (tab === 'hunt') {
     let list = hunting;
-    if (filter === 'new') list = list.filter(j => j.status === 'new' && !seen.includes(j.id));
-    else if (filter !== 'all') list = list.filter(j => j.category === filter);
     html = list.length ? list.map(j => cardHtml(j, 'hunt')).join('')
       : '<div id="empty">Quiet waters here.<br>Fresh catches surface after the daily 2 PM patrol.</div>';
     seen = [...new Set([...seen, ...list.map(j => j.id)])];
@@ -434,13 +436,6 @@ function toast(msg) {
   setTimeout(() => t.style.display = 'none', 2500);
 }
 
-document.querySelectorAll('.chip').forEach(c => c.onclick = () => {
-  document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
-  c.classList.add('active');
-  filter = c.dataset.f;
-  render();
-});
-
 document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active');
@@ -468,57 +463,93 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+let pushOn = localStorage.getItem('sharq_push_off') !== '1';
+
+function pushSupported() {
+  return 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
+}
+
 async function fetchAndShowToken() {
   try {
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const messaging = firebase.messaging();
     const reg = swReg || await navigator.serviceWorker.ready;
     const token = await messaging.getToken({ vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
-    if (token) {
-      $('#push-banner').style.display = 'none';
-      toast('Notifications enabled!');
-    }
+    if (token) toast('Notifications enabled!');
   } catch (e) {
     toast('Notifications unavailable on this device');
   }
 }
 
-function maybeShowPushBanner() {
-  const ok = 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
-  if (!ok) return;
-  if (Notification.permission === 'default') {
-    $('#push-banner').style.display = 'flex';
-  } else if (Notification.permission === 'granted') {
-    // already allowed earlier — just fetch and show the token
-    fetchAndShowToken();
-  }
+// silently keep the token alive for users who already said yes
+if (pushSupported() && Notification.permission === 'granted' && pushOn) {
+  fetchAndShowToken();
 }
-maybeShowPushBanner();
-
-$('#enable-push').onclick = fetchAndShowToken;
 
 // ---------- Auth + Firestore sync ----------
 function esc(s) { return String(s).replace(/[<>&"']/g, ''); }
 
-function renderAuth() {
-  const el = $('#auth-area');
+function renderAccount() {
   if (user) {
-    const name = esc((user.displayName || user.email || 'you').split(' ')[0]);
-    el.innerHTML = '<span id="auth-who">Signed in as ' + name + ' — devices synced</span><button id="btn-auth">Sign out</button>';
-    $('#btn-auth').onclick = () => firebase.auth().signOut();
+    $('#acct-who').textContent = 'Signed in as ' + esc(user.displayName || user.email || 'you') + ' — devices synced';
+    $('#btn-auth').textContent = 'Sign out';
+    $('#btn-account').classList.add('signed');
   } else {
-    el.innerHTML = '<span id="auth-who">Local only — sign in to sync your devices</span><button id="btn-auth">Sign in with Google</button>';
-    $('#btn-auth').onclick = () => firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .catch(e => toast('Sign-in failed: ' + esc(e.code || 'unknown')));
+    $('#acct-who').textContent = 'Not signed in — sign in to open your waters';
+    $('#btn-auth').textContent = 'Sign in with Google';
+    $('#btn-account').classList.remove('signed');
+  }
+  const t = $('#btn-push-toggle');
+  if (!pushSupported()) {
+    t.textContent = 'N/A'; t.disabled = true;
+  } else if (Notification.permission === 'denied') {
+    t.textContent = 'BLOCKED'; t.disabled = true;
+  } else {
+    t.disabled = false;
+    t.textContent = pushOn ? 'ON' : 'OFF';
+    t.classList.toggle('on', pushOn);
   }
 }
+
+$('#btn-account').onclick = e => {
+  e.stopPropagation();
+  renderAccount();
+  $('#account-panel').classList.toggle('open');
+};
+document.addEventListener('click', e => {
+  if (!e.target.closest('#account-panel') && !e.target.closest('#btn-account')) {
+    $('#account-panel').classList.remove('open');
+  }
+});
+$('#btn-auth').onclick = () => {
+  $('#account-panel').classList.remove('open');
+  if (user) {
+    firebase.auth().signOut();
+  } else {
+    firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .catch(e => toast('Sign-in failed: ' + esc(e.code || 'unknown')));
+  }
+};
+$('#btn-push-toggle').onclick = async () => {
+  if (pushOn) {
+    pushOn = false;
+    localStorage.setItem('sharq_push_off', '1');
+    try { await firebase.messaging().deleteToken(); } catch (e) {}
+    toast('Push alerts off');
+  } else {
+    pushOn = true;
+    localStorage.removeItem('sharq_push_off');
+    fetchAndShowToken();
+  }
+  renderAccount();
+};
 
 function initAuth() {
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   db = firebase.firestore();
   firebase.auth().onAuthStateChanged(async u => {
     user = u;
-    renderAuth();
+    renderAccount();
     authChecked = true;
     render();
     if (!u) return;
@@ -563,7 +594,7 @@ function initAuth() {
   });
 }
 initAuth();
-renderAuth();
+renderAccount();
 
 load();
 </script>
