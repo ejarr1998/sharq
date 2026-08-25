@@ -23,7 +23,7 @@ self.addEventListener('notificationclick', e => {
 });
 
 // Offline caching
-const CACHE = 'sharq-v18';
+const CACHE = 'sharq-v19';
 const PRECACHE = ['./', 'index.html', 'jobs.json', 'manifest.json'];
 
 self.addEventListener('install', e => {
