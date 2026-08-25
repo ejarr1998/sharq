@@ -365,6 +365,10 @@ function render() {
     $('#c-hunt').textContent = 0;
     $('#c-caught').textContent = 0;
     $('#c-dismissed').textContent = 0;
+    $('#stats').innerHTML =
+      '<div class="stat"><b>—</b>In water</div>' +
+      '<div class="stat hot"><b>—</b>Fresh</div>' +
+      '<div class="stat"><b>—</b>Caught</div>';
     $('#jobs').innerHTML = '<div id="empty">These waters are private.<br>Sign in with Google above to see your hunt.</div>';
     return;
   }
