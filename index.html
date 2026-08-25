@@ -139,6 +139,14 @@
     padding: 12px 16px;
   }
   #clear-bar span { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+  #auth-area { margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  #auth-who { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); }
+  #btn-auth {
+    border: 2px solid var(--ink); background: var(--paper); color: var(--ink);
+    padding: 7px 14px; font-size: 10px; font-weight: 900; text-transform: uppercase;
+    letter-spacing: 0.1em; cursor: pointer; border-radius: 0; white-space: nowrap;
+  }
+  #btn-auth:hover { background: var(--volt); color: #fff; border-color: var(--volt); }
   #clear-bar button {
     background: var(--paper); color: var(--ink); border: 2px solid var(--paper);
     padding: 9px 16px; font-weight: 900; font-size: 11px; text-transform: uppercase;
@@ -207,6 +215,7 @@
   </div>
   <div id="updated">Circling…</div>
   <div id="stats"></div>
+  <div id="auth-area"></div>
 </header>
 
 <div id="push-banner">
@@ -237,6 +246,8 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
 // ============ FIREBASE CONFIG ============
 const firebaseConfig = {
@@ -261,10 +272,19 @@ if (Array.isArray(applied)) {
   const o = {}; applied.forEach(id => o[id] = 'earlier'); applied = o;
 }
 
+let user = null, db = null, applyingRemote = false;
+
 function save() {
   localStorage.setItem('sharq_applied', JSON.stringify(applied));
   localStorage.setItem('sharq_dismissed', JSON.stringify(dismissed));
   localStorage.setItem('sharq_seen', JSON.stringify(seen));
+  localStorage.setItem('sharq_deleted', JSON.stringify(deleted));
+  if (user && db && !applyingRemote) {
+    db.collection('users').doc(user.uid).set({
+      applied: applied, dismissed: dismissed, seen: seen, deleted: deleted,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true }).catch(e => console.warn('Firestore sync failed', e));
+  }
 }
 
 async function load() {
@@ -423,7 +443,7 @@ if ('serviceWorker' in navigator) {
 
 async function fetchAndShowToken() {
   try {
-    firebase.initializeApp(firebaseConfig);
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const messaging = firebase.messaging();
     const reg = swReg || await navigator.serviceWorker.ready;
     const token = await messaging.getToken({ vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
@@ -450,6 +470,71 @@ maybeShowPushBanner();
 
 $('#enable-push').onclick = fetchAndShowToken;
 
+// ---------- Auth + Firestore sync ----------
+function esc(s) { return String(s).replace(/[<>&"']/g, ''); }
+
+function renderAuth() {
+  const el = $('#auth-area');
+  if (user) {
+    const name = esc((user.displayName || user.email || 'you').split(' ')[0]);
+    el.innerHTML = '<span id="auth-who">Signed in as ' + name + ' — devices synced</span><button id="btn-auth">Sign out</button>';
+    $('#btn-auth').onclick = () => firebase.auth().signOut();
+  } else {
+    el.innerHTML = '<span id="auth-who">Local only — sign in to sync your devices</span><button id="btn-auth">Sign in with Google</button>';
+    $('#btn-auth').onclick = () => firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .catch(e => toast('Sign-in failed: ' + esc(e.code || 'unknown')));
+  }
+}
+
+function initAuth() {
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+  firebase.auth().onAuthStateChanged(async u => {
+    user = u;
+    renderAuth();
+    if (!u) return;
+    const ref = db.collection('users').doc(u.uid);
+    try {
+      const snap = await ref.get();
+      if (snap.exists) {
+        const r = snap.data();
+        applied = Object.assign({}, r.applied || {}, applied);
+        dismissed = [...new Set([...(r.dismissed || []), ...dismissed])];
+        deleted = [...new Set([...(r.deleted || []), ...deleted])];
+        seen = [...new Set([...(r.seen || []), ...seen])];
+        save();
+        load();
+        toast('Synced across your devices');
+      } else {
+        save();
+        toast('Account linked — state uploaded');
+      }
+      ref.onSnapshot(s => {
+        if (!s.exists || !user) return;
+        const r = s.data();
+        const same = JSON.stringify(r.applied || {}) === JSON.stringify(applied)
+          && JSON.stringify(r.dismissed || []) === JSON.stringify(dismissed)
+          && JSON.stringify(r.deleted || []) === JSON.stringify(deleted)
+          && JSON.stringify(r.seen || []) === JSON.stringify(seen);
+        if (same) return;
+        applyingRemote = true;
+        applied = r.applied || {};
+        dismissed = r.dismissed || [];
+        deleted = r.deleted || [];
+        seen = r.seen || [];
+        allJobs = allJobs.filter(j => !deleted.includes(j.id));
+        save();
+        applyingRemote = false;
+        render();
+      }, e => console.warn('sync listener error', e));
+    } catch (e) {
+      console.warn('Firestore unavailable, staying local', e);
+      toast('Sync unavailable — using local storage');
+    }
+  });
+}
+initAuth();
+renderAuth();
 
 load();
 </script>
