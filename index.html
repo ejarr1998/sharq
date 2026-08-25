@@ -272,7 +272,7 @@ if (Array.isArray(applied)) {
   const o = {}; applied.forEach(id => o[id] = 'earlier'); applied = o;
 }
 
-let user = null, db = null, applyingRemote = false;
+let user = null, db = null, applyingRemote = false, authChecked = false;
 
 function save() {
   localStorage.setItem('sharq_applied', JSON.stringify(applied));
@@ -344,7 +344,19 @@ function render() {
     `<div class="stat hot"><b>${newCount}</b>Fresh</div>` +
     `<div class="stat"><b>${caught.length}</b>Caught</div>`;
 
-  $('#filters').classList.toggle('hidden', tab !== 'hunt');
+  $('#filters').classList.toggle('hidden', tab !== 'hunt' || !user);
+
+  if (!authChecked) {
+    $('#jobs').innerHTML = '<div id="empty">Checking sign-in…</div>';
+    return;
+  }
+  if (!user) {
+    $('#c-hunt').textContent = 0;
+    $('#c-caught').textContent = 0;
+    $('#c-dismissed').textContent = 0;
+    $('#jobs').innerHTML = '<div id="empty">These waters are private.<br>Sign in with Google above to see your hunt.</div>';
+    return;
+  }
 
   let html = '';
   if (tab === 'hunt') {
@@ -492,6 +504,8 @@ function initAuth() {
   firebase.auth().onAuthStateChanged(async u => {
     user = u;
     renderAuth();
+    authChecked = true;
+    render();
     if (!u) return;
     const ref = db.collection('users').doc(u.uid);
     try {
