@@ -1,0 +1,50 @@
+name: Sharq Firestore Ingest
+
+on:
+  workflow_dispatch:
+    inputs:
+      uid:
+        description: 'Firebase Auth UID of the user to receive these jobs'
+        required: true
+        type: string
+      jobs_payload:
+        description: 'JSON string: {"updated": "...", "jobs": [...]}'
+        required: true
+        type: string
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write jobs to Firestore
+        env:
+          SA_JSON: ${{ secrets.FCM_SERVICE_ACCOUNT }}
+          UID: ${{ inputs.uid }}
+          PAYLOAD: ${{ inputs.jobs_payload }}
+        run: |
+          pip install --quiet google-auth requests
+          python3 - <<'PYEOF'
+          import json, os, requests
+          from google.oauth2 import service_account
+          from google.auth.transport.requests import Request
+
+          sa = json.loads(os.environ['SA_JSON'])
+          creds = service_account.Credentials.from_service_account_info(
+              sa, scopes=['https://www.googleapis.com/auth/datastore'])
+          creds.refresh(Request())
+
+          payload = json.loads(os.environ['PAYLOAD'])
+          uid = os.environ['UID']
+          project = sa['project_id']
+          url = (f'https://firestore.googleapis.com/v1/projects/{project}'
+                 f'/databases/(default)/documents/users/{uid}'
+                 '?updateMask.fieldPaths=jobs&updateMask.fieldPaths=jobsUpdated')
+          body = {"fields": {
+              "jobs": {"stringValue": json.dumps(payload)},
+              "jobsUpdated": {"stringValue": payload.get("updated", "")}
+          }}
+          r = requests.patch(url, headers={'Authorization': 'Bearer ' + creds.token}, json=body)
+          print(r.status_code, r.text[:300])
+          r.raise_for_status()
+          print('Ingested', len(payload.get('jobs', [])), 'jobs for user', uid)
+          PYEOF
