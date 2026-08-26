@@ -1,6 +1,54 @@
 {
-  "updated": "2026-08-25 (ET)",
+  "updated": "2026-08-26 (ET)",
   "jobs": [
+    {
+      "id": "govcio-project-manager-business-analyst",
+      "title": "Project Manager / Business Analyst",
+      "company": "GovCIO",
+      "location": "Remote — US",
+      "pay": "$85,000–$105,000",
+      "added": "2026-08-26",
+      "fit": "Fresh Aug 19 (req #8740) — remote PM/BA on federal IT programs asking Bachelors + 5–7 yrs PM/BA with Jira/Confluence/Agile, right at your 6 yrs; full benefits and pay clears target. Needs ability to obtain a Public Trust clearance.",
+      "link": "https://govcio.com/jobs/project-manager/",
+      "category": "support",
+      "status": "new"
+    },
+    {
+      "id": "crowdstrike-salesforce-bsa-quote-to-cash",
+      "title": "Salesforce Business Systems Analyst — Quote-to-Cash",
+      "company": "CrowdStrike",
+      "location": "Remote — USA",
+      "pay": "$100,000–$155,000 + bonus/equity",
+      "added": "2026-08-26",
+      "fit": "Stretch — posted Aug 25 (R29883): asks 5+ yrs SaaS business-systems work plus 2+ yrs hands-on Salesforce CPQ/Revenue Cloud; your SF year was admin/dev without CPQ, but certs are recertifiable and pay far clears target at a remote-first security leader. Apply window runs to Oct 24.",
+      "link": "https://crowdstrike.wd5.myworkdayjobs.com/crowdstrikecareers/job/usa---remote/salesforce-business-systems-analyst--quote-to-cash--remote-_r29883",
+      "category": "support",
+      "status": "new"
+    },
+    {
+      "id": "smarterdx-senior-client-support-analyst",
+      "title": "Senior Client Support Analyst",
+      "company": "SmarterDx",
+      "location": "Remote — US (EST/CST hours preferred)",
+      "pay": "$80,000–$95,000",
+      "added": "2026-08-26",
+      "fit": "Stretch — posted Aug 15: own the hardest client-support investigations for a clinical-AI SaaS; asks 7–10 yrs support (you're at 6 total) but Jira/Zendesk, ticket documentation, and mentoring a new hire map directly, Salesforce/SQL are nice-to-haves, and pay sits mid-target with 12-wk parental leave.",
+      "link": "https://careers.transformcap.com/companies/smarterdx-2/jobs/90109011-senior-client-support-analyst",
+      "category": "support",
+      "status": "new"
+    },
+    {
+      "id": "fourth-enterprise-implementation-consultant",
+      "title": "Enterprise Implementation Consultant — WFM, Inventory, Back-Office",
+      "company": "Fourth",
+      "location": "Remote — US (Indiana approved); some customer travel",
+      "pay": "Not listed (est. $70,000–$90,000)",
+      "added": "2026-08-26",
+      "fit": "Rolling req refreshed Aug 25 — 4+ yrs client-facing SaaS implementation is exactly your IFS/MWM profile: discovery, configuration, payroll/POS/ERP integrations, UAT, and training. Indiana is an explicitly approved remote state and parental leave is included.",
+      "link": "https://careers.fourth.com/jobs/7223385-enterprise-implementation-consultant-wfm-inventory-back-office",
+      "category": "implementation",
+      "status": "new"
+    },
     {
       "id": "rh-ifs-cloud-consultant-5996",
       "title": "IFS Cloud Consultant (Functional — Implementation & User Enablement)",
