@@ -1,0 +1,29 @@
+name: debug-list
+on:
+  workflow_dispatch:
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List user docs
+        env:
+          SA_JSON: ${{ secrets.FCM_SERVICE_ACCOUNT }}
+        run: |
+          pip install -q google-auth requests
+          python3 - <<'PYEOF'
+          import json, os, requests, google.auth.transport.requests as gtr
+          from google.oauth2 import service_account
+          sa = json.loads(os.environ['SA_JSON'])
+          creds = service_account.Credentials.from_service_account_info(
+              sa, scopes=['https://www.googleapis.com/auth/datastore'])
+          creds.refresh(gtr.Request())
+          url = f"https://firestore.googleapis.com/v1/projects/{sa['project_id']}/databases/(default)/documents/users"
+          r = requests.get(url, headers={'Authorization': 'Bearer ' + creds.token})
+          r.raise_for_status()
+          for d in r.json().get('documents', []):
+              docid = d['name'].split('/')[-1]
+              fields = d.get('fields', {})
+              print('DOC:', docid)
+              print('  fields:', sorted(fields.keys()))
+              print('  has jobs:', 'jobs' in fields, '| has fcmToken:', 'fcmToken' in fields)
+          PYEOF
