@@ -244,7 +244,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v29</div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v30</div>
   <div id="stats"></div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
@@ -322,22 +322,19 @@ let loadSeq = 0;
 async function load() {
   const mySeq = ++loadSeq;  // only the most recent call may touch the screen
   try {
-    if (user && db) {
-      const snap = await db.collection('users').doc(user.uid).get({ source: 'server' });
+    if (user) {
+      // per-account patrol file (Firestore fields written server-side proved
+      // unreliable to read back from some devices; the file channel is solid)
+      const res = await fetch('jobs-' + user.uid + '.json?ts=' + Date.now());
       if (mySeq !== loadSeq) return;
-      const d = snap.exists ? snap.data() : {};
-      if (d.jobs) {
-        const parsed = JSON.parse(d.jobs);
+      if (res.ok) {
+        const parsed = await res.json();
         allJobs = (parsed.jobs || []).filter(j => !deleted.includes(j.id));
         lastJobsUpdated = parsed.updated || '';
         $('#updated').textContent = 'Last patrol — ' + lastJobsUpdated;
-        $('#ver').textContent = 'v29 jobs yes (' + (parsed.jobs || []).length + ') | fields: ' + Object.keys(d).sort().join(',');
       } else {
-        // signed-in users only ever see their own patrol results —
-        // never fall back to the shared jobs.json (that is someone else's hunt)
         allJobs = [];
         $('#updated').textContent = 'No patrol has run for your account yet';
-        $('#ver').textContent = 'v29 jobs NONE doc ' + (snap.exists ? 'exists' : 'missing') + ' | fields: ' + Object.keys(d).sort().join(',');
       }
       render();
       return;
