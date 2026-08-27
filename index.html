@@ -302,10 +302,13 @@ function save() {
   }
 }
 
+let loadSeq = 0;
 async function load() {
+  const mySeq = ++loadSeq;  // only the most recent call may touch the screen
   try {
     if (user && db) {
       const snap = await db.collection('users').doc(user.uid).get();
+      if (mySeq !== loadSeq) return;
       const d = snap.exists ? snap.data() : {};
       if (d.jobs) {
         const parsed = JSON.parse(d.jobs);
@@ -316,10 +319,12 @@ async function load() {
       }
     }
     const res = await fetch('jobs.json?ts=' + Date.now());
+    if (mySeq !== loadSeq) return;
     const data = await res.json();
     allJobs = (data.jobs || []).filter(j => !deleted.includes(j.id));
     $('#updated').textContent = 'Last patrol — ' + data.updated;
   } catch (e) {
+    if (mySeq !== loadSeq) return;
     $('#updated').textContent = 'LOAD ERROR: ' + e.message;
   }
   render();
@@ -574,7 +579,7 @@ function initAuth() {
     renderAccount();
     authChecked = true;
     render();
-    if (!u) return;
+    if (!u) { load(); return; }
     const ref = db.collection('users').doc(u.uid);
     try {
       const snap = await ref.get();
@@ -617,8 +622,6 @@ function initAuth() {
 }
 initAuth();
 renderAccount();
-
-load();
 </script>
 </body>
 </html>
