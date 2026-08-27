@@ -484,7 +484,13 @@ async function fetchAndShowToken() {
     const messaging = firebase.messaging();
     const reg = swReg || await navigator.serviceWorker.ready;
     const token = await messaging.getToken({ vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
-    if (token) toast('Notifications enabled!');
+    if (token && user && db) {
+      // keep the patrol's delivery address current — tokens rot when app data is cleared
+      db.collection('users').doc(user.uid).set({
+        fcmToken: token,
+        fcmUpdatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true }).catch(e => console.warn('token sync failed', e));
+    }
   } catch (e) {
     toast('Notifications unavailable on this device');
   }
