@@ -274,7 +274,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v37</div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v38</div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
     <button id="btn-auth">Sign in with Google</button>
@@ -324,9 +324,27 @@ let dismissed = JSON.parse(localStorage.getItem('sharq_dismissed') || '[]');
 let seen = JSON.parse(localStorage.getItem('sharq_seen') || '[]');
 let deleted = JSON.parse(localStorage.getItem('sharq_deleted') || '[]');
 
-if (Array.isArray(applied)) {
-  const o = {}; applied.forEach(id => o[id] = 'earlier'); applied = o;
+// Defensive normalization: a bad write once left `applied` stored as an ARRAY
+// in Firestore. Arrays break `id in applied` semantics and Object.assign merges,
+// which silently blocked "Back to hunt". Coerce everything back to sane shapes.
+function asMap(v) {
+  if (!v) return {};
+  if (Array.isArray(v)) { const o = {}; v.forEach(id => { if (typeof id === 'string') o[id] = 'earlier'; }); return o; }
+  if (typeof v === 'object') return v;
+  return {};
 }
+function asList(v) {
+  if (!v) return [];
+  return (Array.isArray(v) ? v : [v]).flat().filter(x => typeof x === 'string');
+}
+function normalizeState() {
+  applied = asMap(applied);
+  interview = asMap(interview);
+  dismissed = asList(dismissed);
+  seen = asList(seen);
+  deleted = asList(deleted);
+}
+normalizeState();
 
 let user = null, db = null, applyingRemote = false, authChecked = false, stateReady = false, lastJobsUpdated = '';
 
@@ -531,11 +549,13 @@ function clearReleased() {
   render();
 }
 function restore(id) {
+  normalizeState();
   delete applied[id];
   dismissed = dismissed.filter(x => x !== id);
+  persistLocal();
+  render();            // respond instantly, sync in the background
   save();
   toast('Back in the hunt');
-  render();
 }
 
 function toast(msg) {
@@ -680,11 +700,12 @@ function initAuth() {
       const snap = await ref.get();
       if (snap.exists) {
         const r = snap.data();
-        applied = Object.assign({}, r.applied || {}, applied);
-        interview = Object.assign({}, r.interview || {}, interview);
-        dismissed = [...new Set([...(r.dismissed || []), ...dismissed])];
-        deleted = [...new Set([...(r.deleted || []), ...deleted])];
-        seen = [...new Set([...(r.seen || []), ...seen])];
+        applied = Object.assign({}, asMap(r.applied), applied);
+        interview = Object.assign({}, asMap(r.interview), interview);
+        dismissed = [...new Set([...asList(r.dismissed), ...dismissed])];
+        deleted = [...new Set([...asList(r.deleted), ...deleted])];
+        seen = [...new Set([...asList(r.seen), ...seen])];
+        normalizeState();
         stateReady = true;
         save();
         load();
@@ -697,18 +718,18 @@ function initAuth() {
       ref.onSnapshot(s => {
         if (!s.exists || !user) return;
         const r = s.data();
-        const same = JSON.stringify(r.applied || {}) === JSON.stringify(applied)
-          && JSON.stringify(r.interview || {}) === JSON.stringify(interview)
-          && JSON.stringify(r.dismissed || []) === JSON.stringify(dismissed)
-          && JSON.stringify(r.deleted || []) === JSON.stringify(deleted)
-          && JSON.stringify(r.seen || []) === JSON.stringify(seen);
+        const same = JSON.stringify(asMap(r.applied)) === JSON.stringify(applied)
+          && JSON.stringify(asMap(r.interview)) === JSON.stringify(interview)
+          && JSON.stringify(asList(r.dismissed)) === JSON.stringify(dismissed)
+          && JSON.stringify(asList(r.deleted)) === JSON.stringify(deleted)
+          && JSON.stringify(asList(r.seen)) === JSON.stringify(seen);
         if (same) return;
         applyingRemote = true;
-        applied = r.applied || {};
-        interview = r.interview || {};
-        dismissed = r.dismissed || [];
-        deleted = r.deleted || [];
-        seen = r.seen || [];
+        applied = asMap(r.applied);
+        interview = asMap(r.interview);
+        dismissed = asList(r.dismissed);
+        deleted = asList(r.deleted);
+        seen = asList(r.seen);
         allJobs = allJobs.filter(j => !deleted.includes(j.id));
         save();
         applyingRemote = false;
