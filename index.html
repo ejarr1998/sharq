@@ -296,14 +296,20 @@ if (Array.isArray(applied)) {
   const o = {}; applied.forEach(id => o[id] = 'earlier'); applied = o;
 }
 
-let user = null, db = null, applyingRemote = false, authChecked = false;
+let user = null, db = null, applyingRemote = false, authChecked = false, stateReady = false, lastJobsUpdated = '';
 
-function save() {
+function persistLocal() {
   localStorage.setItem('sharq_applied', JSON.stringify(applied));
   localStorage.setItem('sharq_dismissed', JSON.stringify(dismissed));
   localStorage.setItem('sharq_seen', JSON.stringify(seen));
   localStorage.setItem('sharq_deleted', JSON.stringify(deleted));
-  if (user && db && !applyingRemote) {
+}
+
+function save() {
+  persistLocal();
+  // never push before the initial cloud merge has run — an early push of empty
+  // local arrays would wipe the account's real state (Firestore replaces arrays whole)
+  if (user && db && stateReady && !applyingRemote) {
     db.collection('users').doc(user.uid).set({
       applied: applied, dismissed: dismissed, seen: seen, deleted: deleted,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -322,7 +328,8 @@ async function load() {
       if (d.jobs) {
         const parsed = JSON.parse(d.jobs);
         allJobs = (parsed.jobs || []).filter(j => !deleted.includes(j.id));
-        $('#updated').textContent = 'Last patrol — ' + (parsed.updated || '');
+        lastJobsUpdated = parsed.updated || '';
+        $('#updated').textContent = 'Last patrol — ' + lastJobsUpdated;
       } else {
         // signed-in users only ever see their own patrol results —
         // never fall back to the shared jobs.json (that is someone else's hunt)
@@ -430,16 +437,27 @@ function render() {
       : '<div id="empty">No releases.<br>Jobs you dismiss with ✕ wash up here.</div>';
   }
   $('#jobs').innerHTML = html;
-  save();
+  persistLocal();
+}
+
+function syncJobs() {
+  // scrub deleted listings from the account's stored payload, not just the screen
+  if (user && db && stateReady && lastJobsUpdated !== null) {
+    db.collection('users').doc(user.uid).set({
+      jobs: JSON.stringify({ updated: lastJobsUpdated, jobs: allJobs })
+    }, { merge: true }).catch(e => console.warn('jobs sync failed', e));
+  }
 }
 
 function markCaught(id) {
   applied[id] = new Date().toISOString().slice(0, 10);
+  save();
   toast('Caught — nice strike!');
   render();
 }
 function dismiss(id) {
   dismissed.push(id);
+  save();
   toast('Released back into the water');
   render();
 }
@@ -447,7 +465,9 @@ function deleteForever(id) {
   if (!confirm('Delete this posting permanently? It will not come back, even in Released.')) return;
   dismissed = dismissed.filter(x => x !== id);
   deleted.push(id);
-  localStorage.setItem('sharq_deleted', JSON.stringify(deleted));
+  allJobs = allJobs.filter(j => j.id !== id);
+  save();
+  syncJobs();
   toast('Deleted for good');
   render();
 }
@@ -457,13 +477,15 @@ function clearReleased() {
   deleted = [...new Set([...deleted, ...dismissed])];
   allJobs = allJobs.filter(j => !dismissed.includes(j.id));
   dismissed = [];
-  localStorage.setItem('sharq_deleted', JSON.stringify(deleted));
+  save();
+  syncJobs();
   toast('Released bin cleared');
   render();
 }
 function restore(id) {
   delete applied[id];
   dismissed = dismissed.filter(x => x !== id);
+  save();
   toast('Back in the hunt');
   render();
 }
@@ -612,10 +634,12 @@ function initAuth() {
         dismissed = [...new Set([...(r.dismissed || []), ...dismissed])];
         deleted = [...new Set([...(r.deleted || []), ...deleted])];
         seen = [...new Set([...(r.seen || []), ...seen])];
+        stateReady = true;
         save();
         load();
         toast('Synced across your devices');
       } else {
+        stateReady = true;
         save();
         toast('Account linked — state uploaded');
       }
