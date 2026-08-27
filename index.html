@@ -274,7 +274,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v38</div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v39</div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
     <button id="btn-auth">Sign in with Google</button>
@@ -323,6 +323,11 @@ let interview = JSON.parse(localStorage.getItem('sharq_interview') || '{}');
 let dismissed = JSON.parse(localStorage.getItem('sharq_dismissed') || '[]');
 let seen = JSON.parse(localStorage.getItem('sharq_seen') || '[]');
 let deleted = JSON.parse(localStorage.getItem('sharq_deleted') || '[]');
+// tombstones: ids deliberately removed from applied/interview, with timestamps.
+// A stale signed-in device can re-push old ids to the cloud; tombstones make
+// removals stick through every merge and snapshot.
+let removed = JSON.parse(localStorage.getItem('sharq_removed') || '{}');
+let removedI = JSON.parse(localStorage.getItem('sharq_removedI') || '{}');
 
 // Defensive normalization: a bad write once left `applied` stored as an ARRAY
 // in Firestore. Arrays break `id in applied` semantics and Object.assign merges,
@@ -343,8 +348,22 @@ function normalizeState() {
   dismissed = asList(dismissed);
   seen = asList(seen);
   deleted = asList(deleted);
+  removed = asMap(removed);
+  removedI = asMap(removedI);
+  // prune tombstones older than 30 days
+  const cutoff = Date.now() - 30 * 86400000;
+  for (const m of [removed, removedI]) {
+    for (const id in m) { const t = Date.parse(m[id]); if (!t || t < cutoff) delete m[id]; }
+  }
 }
 normalizeState();
+// tombstone-aware map helpers
+function withoutTombstones(m, tomb) { const o = Object.assign({}, asMap(m)); for (const id in tomb) delete o[id]; return o; }
+function unionTombstones(a, b) {
+  const out = Object.assign({}, asMap(a));
+  for (const id in asMap(b)) { if (!out[id] || String(b[id]) > String(out[id])) out[id] = b[id]; }
+  return out;
+}
 
 let user = null, db = null, applyingRemote = false, authChecked = false, stateReady = false, lastJobsUpdated = '';
 
@@ -354,6 +373,8 @@ function persistLocal() {
   localStorage.setItem('sharq_dismissed', JSON.stringify(dismissed));
   localStorage.setItem('sharq_seen', JSON.stringify(seen));
   localStorage.setItem('sharq_deleted', JSON.stringify(deleted));
+  localStorage.setItem('sharq_removed', JSON.stringify(removed));
+  localStorage.setItem('sharq_removedI', JSON.stringify(removedI));
 }
 
 function save() {
@@ -363,6 +384,7 @@ function save() {
   if (user && db && stateReady && !applyingRemote) {
     db.collection('users').doc(user.uid).set({
       applied: applied, interview: interview, dismissed: dismissed, seen: seen, deleted: deleted,
+      removed: removed, removedI: removedI,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true }).catch(e => console.warn('Firestore sync failed', e));
   }
@@ -504,21 +526,25 @@ function syncJobs() {
 }
 
 function markCaught(id) {
+  delete removed[id];
   applied[id] = new Date().toISOString().slice(0, 10);
   save();
   toast('Caught — nice strike!');
   render();
 }
 function markInterview(id) {
+  delete removedI[id];
   interview[id] = new Date().toISOString().slice(0, 10);
   save();
   toast('Interview — bring it home!');
   render();
 }
 function unInterview(id) {
+  removedI[id] = new Date().toISOString();
   delete interview[id];
-  save();
+  persistLocal();
   render();
+  save();
 }
 function dismiss(id) {
   delete interview[id];
@@ -550,6 +576,7 @@ function clearReleased() {
 }
 function restore(id) {
   normalizeState();
+  removed[id] = new Date().toISOString();   // tombstone: this removal must stick
   delete applied[id];
   dismissed = dismissed.filter(x => x !== id);
   persistLocal();
@@ -700,8 +727,10 @@ function initAuth() {
       const snap = await ref.get();
       if (snap.exists) {
         const r = snap.data();
-        applied = Object.assign({}, asMap(r.applied), applied);
-        interview = Object.assign({}, asMap(r.interview), interview);
+        removed = unionTombstones(removed, r.removed);
+        removedI = unionTombstones(removedI, r.removedI);
+        applied = withoutTombstones(Object.assign({}, asMap(r.applied), applied), removed);
+        interview = withoutTombstones(Object.assign({}, asMap(r.interview), interview), removedI);
         dismissed = [...new Set([...asList(r.dismissed), ...dismissed])];
         deleted = [...new Set([...asList(r.deleted), ...deleted])];
         seen = [...new Set([...asList(r.seen), ...seen])];
@@ -718,15 +747,19 @@ function initAuth() {
       ref.onSnapshot(s => {
         if (!s.exists || !user) return;
         const r = s.data();
-        const same = JSON.stringify(asMap(r.applied)) === JSON.stringify(applied)
-          && JSON.stringify(asMap(r.interview)) === JSON.stringify(interview)
+        const rApplied = withoutTombstones(r.applied, unionTombstones(removed, r.removed));
+        const rInterview = withoutTombstones(r.interview, unionTombstones(removedI, r.removedI));
+        const same = JSON.stringify(rApplied) === JSON.stringify(applied)
+          && JSON.stringify(rInterview) === JSON.stringify(interview)
           && JSON.stringify(asList(r.dismissed)) === JSON.stringify(dismissed)
           && JSON.stringify(asList(r.deleted)) === JSON.stringify(deleted)
           && JSON.stringify(asList(r.seen)) === JSON.stringify(seen);
         if (same) return;
         applyingRemote = true;
-        applied = asMap(r.applied);
-        interview = asMap(r.interview);
+        removed = unionTombstones(removed, r.removed);
+        removedI = unionTombstones(removedI, r.removedI);
+        applied = withoutTombstones(r.applied, removed);
+        interview = withoutTombstones(r.interview, removedI);
         dismissed = asList(r.dismissed);
         deleted = asList(r.deleted);
         seen = asList(r.seen);
