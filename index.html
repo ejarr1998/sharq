@@ -280,7 +280,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v32</div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v33</div>
   <div id="stats"></div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
@@ -667,6 +667,8 @@ function initAuth() {
     authChecked = true;
     render();
     if (!u) { load(); return; }
+    // re-save the push token on every signed-in open — tokens rot silently
+    if (pushSupported() && Notification.permission === 'granted' && pushOn) fetchAndShowToken();
     const ref = db.collection('users').doc(u.uid);
     try {
       const snap = await ref.get();
