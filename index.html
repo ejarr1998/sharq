@@ -244,7 +244,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v30</div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v31</div>
   <div id="stats"></div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
@@ -317,6 +317,9 @@ function save() {
     }, { merge: true }).catch(e => console.warn('Firestore sync failed', e));
   }
 }
+
+let freshOnly = false;
+window.toggleFresh = () => { freshOnly = !freshOnly; render(); };
 
 let loadSeq = 0;
 async function load() {
@@ -424,8 +427,11 @@ function render() {
   let html = '';
   if (tab === 'hunt') {
     let list = [...hunting].sort((a, b) => (b.score || 0) - (a.score || 0));
-    html = list.length ? list.map(j => cardHtml(j, 'hunt')).join('')
-      : '<div id="empty">Quiet waters here.<br>Fresh catches surface after the daily 2 PM patrol.</div>';
+    if (freshOnly) list = list.filter(j => !seen.includes(j.id));
+    const freshN = hunting.filter(j => !seen.includes(j.id)).length;
+    html = `<div id="clear-bar"><span>${freshN} fresh catch${freshN === 1 ? '' : 'es'}</span><button onclick="toggleFresh()" ${freshOnly ? 'style="background:var(--volt);color:#fff"' : ''}>${freshOnly ? 'Fresh only: ON' : 'Fresh only'}</button></div>`
+      + (list.length ? list.map(j => cardHtml(j, 'hunt')).join('')
+        : `<div id="empty">${freshOnly ? 'No fresh catches — you have seen everything in the water.' : 'Quiet waters here.<br>Fresh catches surface after the daily 2 PM patrol.'}</div>`);
     seen = [...new Set([...seen, ...list.map(j => j.id)])];
   } else if (tab === 'caught') {
     html = caught.length ? caught.map(j => cardHtml(j, 'caught')).join('')
