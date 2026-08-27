@@ -1,0 +1,122 @@
+{
+ "updated": "2026-08-27 (ET)",
+ "jobs": [
+  {
+   "id": "openlane-salesforce-administrator",
+   "title": "Salesforce Administrator",
+   "company": "OPENLANE (NYSE: OPLN)",
+   "location": "Carmel, IN (Remote) \u2014 HQ ~15 min from Noblesville",
+   "pay": "$80k\u2013$100k + full benefits (401k match, paid parental leave)",
+   "added": "2026-08-27",
+   "fit": "Hands-on SF Admin: Sales/Service Cloud config, flows, user management, support tickets, adoption. 2+ yrs asked \u2014 your 1 yr admin/dev + lapsed Admin/Dev certs (recertify) make this very reachable, and it's a Carmel company.",
+   "link": "https://builtin.com/job/salesforce-administrator/7303050",
+   "category": "support",
+   "status": "new",
+   "score": 85
+  },
+  {
+   "id": "mutual-of-omaha-business-systems-analyst-api",
+   "title": "Business Systems Analyst \u2014 API (Remote)",
+   "company": "Mutual of Omaha",
+   "location": "Remote (US)",
+   "pay": "$72k\u2013$80k (BSA III) / $76k\u2013$92k (Consultant I) + bonus + benefits",
+   "added": "2026-08-27",
+   "fit": "Full-time regular, remote: API solutioning, testing/validation, cross-team requirements \u2014 maps directly to your Xcel SAP/MWM integration troubleshooting and change-management work. Live on their board today.",
+   "link": "https://careers.pageuppeople.com/823/cw/en-us/job/505085/business-systems-analyst-api-remote",
+   "category": "support",
+   "status": "new",
+   "score": 82
+  },
+  {
+   "id": "mutual-of-omaha-business-systems-consultant",
+   "title": "Business Systems Consultant \u2014 Life Insurance Solutions (Remote)",
+   "company": "Mutual of Omaha",
+   "location": "Remote (US)",
+   "pay": "$75.5k\u2013$97k (Consultant I) + bonus + benefits",
+   "added": "2026-08-27",
+   "fit": "Full-time regular, remote: business-systems liaison for life insurance apps \u2014 requirements, process improvement, system support. Solid lane-2 fit at your target pay. Live on their board today.",
+   "link": "https://careers.pageuppeople.com/823/cw/en-us/job/505130/business-systems-consultant",
+   "category": "support",
+   "status": "new",
+   "score": 80
+  },
+  {
+   "id": "inumc-crm-business-analyst",
+   "title": "CRM Business Analyst (Salesforce platform)",
+   "company": "Indiana Conference of the United Methodist Church",
+   "location": "Carmel, IN 46280",
+   "pay": "$70k\u2013$75k, regular full-time w/ benefits",
+   "added": "2026-08-27",
+   "fit": "Regular full-time exempt: CRM/DB admin + analysis, tech tags include Apex/API (Salesforce platform). 10 min from home; pay at floor but nonprofit pace. Posted this week.",
+   "link": "https://devitjobs.com/jobs/Indiana-Conference-of-the-United-Methodist-Church-CRM-Business-Analyst",
+   "category": "support",
+   "status": "new",
+   "score": 78
+  },
+  {
+   "id": "rldatix-implementation-analyst",
+   "title": "Implementation Analyst",
+   "company": "RLDatix",
+   "location": "Carmel, IN hybrid (~50% of month onsite)",
+   "pay": "Not listed (plausible) + full benefits incl. 401k match, parental leave",
+   "added": "2026-08-27",
+   "fit": "Professional-services SaaS implementation: weekly customer calls, software configuration, leading virtual trainings. Direct match to your IFS/MWM implementation years; Carmel office is ~15 min away.",
+   "link": "https://builtin.com/job/implementation-analyst/8433434",
+   "category": "implementation",
+   "status": "new",
+   "score": 72
+  },
+  {
+   "id": "rldatix-technical-implementation-analyst",
+   "title": "Technical Implementation Analyst",
+   "company": "RLDatix",
+   "location": "Carmel, IN hybrid (few days/week onsite)",
+   "pay": "Not listed (plausible) + full benefits",
+   "added": "2026-08-27",
+   "fit": "Technical implementation for the Policy Stat product: SaaS environment config, integrations, data migration. 2+ yrs technical/support experience asked \u2014 your production-support year fits well. Same Carmel office.",
+   "link": "https://builtin.com/job/technical-implementation-analyst/8518909",
+   "category": "implementation",
+   "status": "new",
+   "score": 73
+  },
+  {
+   "id": "community-health-network-it-business-analyst",
+   "title": "IT Business Analyst \u2014 Hybrid",
+   "company": "Community Health Network",
+   "location": "Indianapolis (Shadeland Station) \u2014 1\u20132 days/wk onsite",
+   "pay": "Not listed (plausible) + full benefits",
+   "added": "2026-08-27",
+   "fit": "Facilitator between IT and business areas: requirements elicitation, root-cause analysis, solution support. Bachelor's + 2 yrs BA asked \u2014 right at your level. Must live within 60 mi of Indy \u2014 you do. Posted ~Aug 18\u201326.",
+   "link": "https://www.ziprecruiter.com/c/Community-Health-Network/Job/IT-Business-Analyst-Hybrid/-in-Indianapolis,IN?jid=7ee0a4bc6d208d0d",
+   "category": "support",
+   "status": "new",
+   "score": 76
+  },
+  {
+   "id": "bhsg-ba-indy",
+   "title": "Business Analyst (Application Support)",
+   "company": "Beacon Hill (client)",
+   "location": "Indianapolis, IN \u2014 direct hire",
+   "pay": "Not listed",
+   "added": "2026-08-24",
+   "fit": "Local direct-hire blending requirements gathering with hands-on application support for key enterprise systems \u2014 asks an IT degree plus 2+ yrs with SQL/Jira a plus, an easy commute from Noblesville. Posted Aug 13.",
+   "link": "https://bhsg.com/jobs/job/tt202621-cpc_1786654488-business-analyst-indianapolis-indiana/",
+   "category": "support",
+   "status": "new",
+   "score": 82
+  },
+  {
+   "id": "kong-sr-ai-enablement-fe",
+   "title": "Senior AI Enablement Specialist \u2014 FE",
+   "company": "Kong",
+   "location": "Remote \u2014 US",
+   "pay": "$94,150\u2013$135,000",
+   "added": "2026-08-23",
+   "fit": "Stretch twin of the same new Kong function \u2014 5+ yrs technical/cross-functional work, coaching users, and proof of AI automations that changed how work gets done; your 5 yrs enterprise support plus hands-on AI builds (this tracker included) is the pitch, and pay clears target. Reposted Aug 21.",
+   "link": "https://www.tealhq.com/job/senior-ai-enablement-specialist_7ea1a68b3b15bd631f5f56bbb31b4bdc35ff1",
+   "category": "ai",
+   "status": "new",
+   "score": 86
+  }
+ ]
+}
