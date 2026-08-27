@@ -1,35 +1,70 @@
 name: Sharq Push Relay
+
 on:
   workflow_dispatch:
     inputs:
-      token: {description: 'FCM device token', required: true}
-      title: {description: 'Title', required: true, default: 'Sharq'}
-      body: {description: 'Body', required: true, default: 'Fresh job matches surfaced!'}
+      uid:
+        description: 'Firebase Auth UID whose stored FCM token should receive the push'
+        required: true
+        type: string
+      title:
+        description: 'Notification title'
+        required: true
+        type: string
+      body:
+        description: 'Notification body'
+        required: true
+        type: string
 
 jobs:
-  send:
+  notify:
     runs-on: ubuntu-latest
     steps:
       - name: Send FCM push
         env:
           SA_JSON: ${{ secrets.FCM_SERVICE_ACCOUNT }}
-          TOKEN: ${{ inputs.token }}
+          UID: ${{ inputs.uid }}
           TITLE: ${{ inputs.title }}
           BODY: ${{ inputs.body }}
         run: |
-          pip install -q google-auth requests
-          python3 << 'EOF'
+          pip install --quiet google-auth requests
+          python3 - <<'PYEOF'
           import json, os, requests
           from google.oauth2 import service_account
-          import google.auth.transport.requests
+          from google.auth.transport.requests import Request
+
           sa = json.loads(os.environ['SA_JSON'])
-          creds = service_account.Credentials.from_service_account_info(
+          project = sa['project_id']
+          uid = os.environ['UID']
+
+          # 1) read the user's current token from Firestore
+          fs_creds = service_account.Credentials.from_service_account_info(
+              sa, scopes=['https://www.googleapis.com/auth/datastore'])
+          fs_creds.refresh(Request())
+          doc_url = (f'https://firestore.googleapis.com/v1/projects/{project}'
+                     f'/databases/(default)/documents/users/{uid}')
+          r = requests.get(doc_url, headers={'Authorization': 'Bearer ' + fs_creds.token})
+          r.raise_for_status()
+          fields = r.json().get('fields', {})
+          token = fields.get('fcmToken', {}).get('stringValue')
+          if not token:
+              raise SystemExit('No fcmToken stored for user ' + uid + ' - user must open the app once')
+
+          # 2) send the push
+          fcm_creds = service_account.Credentials.from_service_account_info(
               sa, scopes=['https://www.googleapis.com/auth/firebase.messaging'])
-          creds.refresh(google.auth.transport.requests.Request())
-          url = f"https://fcm.googleapis.com/v1/projects/{sa['project_id']}/messages:send"
-          payload = {"message": {"token": os.environ['TOKEN'],
-              "notification": {"title": os.environ['TITLE'], "body": os.environ['BODY']},
-              "webpush": {"fcm_options": {"link": "https://ejarr1998.github.io/sharq/"}}}}
-          r = requests.post(url, headers={'Authorization': f'Bearer {creds.token}'}, json=payload, timeout=30)
-          print(r.status_code, r.text[:500]); r.raise_for_status()
-          EOF
+          fcm_creds.refresh(Request())
+          msg = {
+              "message": {
+                  "token": token,
+                  "notification": {"title": os.environ['TITLE'], "body": os.environ['BODY']},
+                  "webpush": {"fcm_options": {"link": "https://ejarr1998.github.io/sharq/"}}
+              }
+          }
+          send = requests.post(
+              f'https://fcm.googleapis.com/v1/projects/{project}/messages:send',
+              headers={'Authorization': 'Bearer ' + fcm_creds.token}, json=msg)
+          print(send.status_code, send.text[:300])
+          send.raise_for_status()
+          print('Push sent to user', uid)
+          PYEOF
