@@ -268,7 +268,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v34</div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v35</div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
     <button id="btn-auth">Sign in with Google</button>
@@ -287,6 +287,7 @@
 <div id="tabs">
   <div class="tab active" data-tab="hunt"><span class="ico">🦈</span>Hunt<span class="count" id="c-hunt">0</span></div>
   <div class="tab" data-tab="caught"><span class="ico">🎣</span>Caught<span class="count" id="c-caught">0</span></div>
+  <div class="tab" data-tab="interview"><span class="ico">📞</span>Interview<span class="count" id="c-interview">0</span></div>
   <div class="tab" data-tab="dismissed"><span class="ico">🌊</span>Released<span class="count" id="c-dismissed">0</span></div>
 </div>
 
@@ -312,6 +313,7 @@ const VAPID_KEY = "BIFMG3wX0YVOLmFde6ckEbLfdiGhtGWICd9GLsm9UJiCQ3sUEjW52GF0FYMk1
 const $ = s => document.querySelector(s);
 let allJobs = [], tab = 'hunt';
 let applied = JSON.parse(localStorage.getItem('sharq_applied') || '{}');
+let interview = JSON.parse(localStorage.getItem('sharq_interview') || '{}');
 let dismissed = JSON.parse(localStorage.getItem('sharq_dismissed') || '[]');
 let seen = JSON.parse(localStorage.getItem('sharq_seen') || '[]');
 let deleted = JSON.parse(localStorage.getItem('sharq_deleted') || '[]');
@@ -324,6 +326,7 @@ let user = null, db = null, applyingRemote = false, authChecked = false, stateRe
 
 function persistLocal() {
   localStorage.setItem('sharq_applied', JSON.stringify(applied));
+  localStorage.setItem('sharq_interview', JSON.stringify(interview));
   localStorage.setItem('sharq_dismissed', JSON.stringify(dismissed));
   localStorage.setItem('sharq_seen', JSON.stringify(seen));
   localStorage.setItem('sharq_deleted', JSON.stringify(deleted));
@@ -335,7 +338,7 @@ function save() {
   // local arrays would wipe the account's real state (Firestore replaces arrays whole)
   if (user && db && stateReady && !applyingRemote) {
     db.collection('users').doc(user.uid).set({
-      applied: applied, dismissed: dismissed, seen: seen, deleted: deleted,
+      applied: applied, interview: interview, dismissed: dismissed, seen: seen, deleted: deleted,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true }).catch(e => console.warn('Firestore sync failed', e));
   }
@@ -394,6 +397,7 @@ function gradeChip(j) {
 function cardHtml(j, mode) {
   const isNew = j.status === 'new' && !seen.includes(j.id);
   const badge = mode === 'caught' ? '<span class="badge applied">Caught</span>'
+              : mode === 'interview' ? '<span class="badge applied">Interview</span>'
               : mode === 'dismissed' ? '<span class="badge dead">Released</span>'
               : isNew ? '<span class="badge new">Fresh</span>' : '';
   let actions = '';
@@ -403,12 +407,17 @@ function cardHtml(j, mode) {
       <button class="btn btn-dismiss" onclick="dismiss('${j.id}')" title="Not interested">✕</button>`;
   } else if (mode === 'caught') {
     actions = `<a class="btn btn-apply" href="${j.link}" target="_blank" rel="noopener">View posting →</a>
+      <button class="btn btn-mark" onclick="markInterview('${j.id}')">Interview 📞</button>
       <button class="btn btn-restore" onclick="restore('${j.id}')">Back to hunt</button>`;
+  } else if (mode === 'interview') {
+    actions = `<a class="btn btn-apply" href="${j.link}" target="_blank" rel="noopener">View posting →</a>
+      <button class="btn btn-restore" onclick="unInterview('${j.id}')">Back to caught</button>`;
   } else {
     actions = `<button class="btn btn-restore" style="flex:1" onclick="restore('${j.id}')">Throw back in the water</button>
       <button class="btn btn-dismiss" onclick="deleteForever('${j.id}')" title="Delete permanently">🗑</button>`;
   }
-  const caughtLine = mode === 'caught' ? `<span>Caught ${applied[j.id] || ''}</span>` : '';
+  const caughtLine = mode === 'caught' ? `<span>Caught ${applied[j.id] || ''}</span>`
+    : mode === 'interview' ? `<span>Caught ${applied[j.id] || ''}</span><span>Interview ${interview[j.id] || ''}</span>` : '';
   return `<div class="card ${mode === 'hunt' && isNew ? 'fresh' : ''}">
     <div class="card-top">
       <div><h2>${j.title}</h2><div class="company">${j.company}</div></div>
@@ -422,11 +431,13 @@ function cardHtml(j, mode) {
 
 function render() {
   const hunting = allJobs.filter(j => !(j.id in applied) && !dismissed.includes(j.id));
-  const caught = allJobs.filter(j => j.id in applied);
+  const caught = allJobs.filter(j => (j.id in applied) && !(j.id in interview));
+  const interviewing = allJobs.filter(j => j.id in interview);
   const released = allJobs.filter(j => dismissed.includes(j.id));
 
   $('#c-hunt').textContent = hunting.length;
   $('#c-caught').textContent = caught.length;
+  $('#c-interview').textContent = interviewing.length;
   $('#c-dismissed').textContent = released.length;
 
 
@@ -437,6 +448,7 @@ function render() {
   if (!user) {
     $('#c-hunt').textContent = 0;
     $('#c-caught').textContent = 0;
+    $('#c-interview').textContent = 0;
     $('#c-dismissed').textContent = 0;
     $('#jobs').innerHTML = '<div id="empty">These waters are private.<br>Sign in with Google above to see your hunt.</div>';
     return;
@@ -456,6 +468,9 @@ function render() {
   } else if (tab === 'caught') {
     html = caught.length ? caught.map(j => cardHtml(j, 'caught')).join('')
       : '<div id="empty">Nothing caught yet.<br>Hit a posting, apply, then tap Mark caught.</div>';
+  } else if (tab === 'interview') {
+    html = interviewing.length ? interviewing.map(j => cardHtml(j, 'interview')).join('')
+      : '<div id="empty">No interviews yet.<br>When a caught job calls back, tap "Interview" on its card.</div>';
   } else {
     html = released.length
       ? `<div id="clear-bar"><span>${released.length} release${released.length === 1 ? '' : 's'} in the bin</span><button onclick="clearReleased()">Clear all 🗑</button></div>`
@@ -481,7 +496,19 @@ function markCaught(id) {
   toast('Caught — nice strike!');
   render();
 }
+function markInterview(id) {
+  interview[id] = new Date().toISOString().slice(0, 10);
+  save();
+  toast('Interview — bring it home!');
+  render();
+}
+function unInterview(id) {
+  delete interview[id];
+  save();
+  render();
+}
 function dismiss(id) {
+  delete interview[id];
   dismissed.push(id);
   save();
   toast('Released back into the water');
@@ -659,6 +686,7 @@ function initAuth() {
       if (snap.exists) {
         const r = snap.data();
         applied = Object.assign({}, r.applied || {}, applied);
+        interview = Object.assign({}, r.interview || {}, interview);
         dismissed = [...new Set([...(r.dismissed || []), ...dismissed])];
         deleted = [...new Set([...(r.deleted || []), ...deleted])];
         seen = [...new Set([...(r.seen || []), ...seen])];
@@ -675,12 +703,14 @@ function initAuth() {
         if (!s.exists || !user) return;
         const r = s.data();
         const same = JSON.stringify(r.applied || {}) === JSON.stringify(applied)
+          && JSON.stringify(r.interview || {}) === JSON.stringify(interview)
           && JSON.stringify(r.dismissed || []) === JSON.stringify(dismissed)
           && JSON.stringify(r.deleted || []) === JSON.stringify(deleted)
           && JSON.stringify(r.seen || []) === JSON.stringify(seen);
         if (same) return;
         applyingRemote = true;
         applied = r.applied || {};
+        interview = r.interview || {};
         dismissed = r.dismissed || [];
         deleted = r.deleted || [];
         seen = r.seen || [];
