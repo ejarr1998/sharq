@@ -314,14 +314,20 @@ async function load() {
         const parsed = JSON.parse(d.jobs);
         allJobs = (parsed.jobs || []).filter(j => !deleted.includes(j.id));
         $('#updated').textContent = 'Last patrol — ' + (parsed.updated || '');
-        render();
-        return;
+      } else {
+        // signed-in users only ever see their own patrol results —
+        // never fall back to the shared jobs.json (that is someone else's hunt)
+        allJobs = [];
+        $('#updated').textContent = 'No patrol has run for your account yet';
       }
+      render();
+      return;
     }
+    // signed out: shared file only feeds the date line behind the sign-in gate
     const res = await fetch('jobs.json?ts=' + Date.now());
     if (mySeq !== loadSeq) return;
     const data = await res.json();
-    allJobs = (data.jobs || []).filter(j => !deleted.includes(j.id));
+    allJobs = [];
     $('#updated').textContent = 'Last patrol — ' + data.updated;
   } catch (e) {
     if (mySeq !== loadSeq) return;
