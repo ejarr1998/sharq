@@ -105,9 +105,9 @@
     border-left: 4px solid var(--volt);
   }
 
-  .actions { display:flex; gap:10px; margin-top:14px; }
+  .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
   .btn {
-    flex:1; text-align:center; padding: 11px; font-size: 12px; font-weight: 900;
+    flex:1 1 30%; min-width: 110px; text-align:center; padding: 11px; font-size: 12px; font-weight: 900;
     text-transform: uppercase; letter-spacing: 0.1em;
     text-decoration:none; cursor:pointer;
     border: 2px solid var(--ink); border-radius: 0;
@@ -268,7 +268,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v35</div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v36</div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
     <button id="btn-auth">Sign in with Google</button>
