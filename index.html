@@ -244,7 +244,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v26</div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v27</div>
   <div id="stats"></div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
@@ -331,13 +331,13 @@ async function load() {
         allJobs = (parsed.jobs || []).filter(j => !deleted.includes(j.id));
         lastJobsUpdated = parsed.updated || '';
         $('#updated').textContent = 'Last patrol — ' + lastJobsUpdated;
-        $('#ver').textContent = 'APP v26 · uid ' + user.uid.slice(0, 8) + ' · jobs yes (' + (parsed.jobs || []).length + ')';
+        $('#ver').textContent = 'v27 ' + user.email + ' | ' + user.uid + ' | jobs yes (' + (parsed.jobs || []).length + ')';
       } else {
         // signed-in users only ever see their own patrol results —
         // never fall back to the shared jobs.json (that is someone else's hunt)
         allJobs = [];
         $('#updated').textContent = 'No patrol has run for your account yet';
-        $('#ver').textContent = 'APP v26 · uid ' + user.uid.slice(0, 8) + ' · jobs NONE · doc ' + (snap.exists ? 'exists' : 'missing');
+        $('#ver').textContent = 'v27 ' + user.email + ' | ' + user.uid + ' | jobs NONE doc ' + (snap.exists ? 'exists' : 'missing');
       }
       render();
       return;
