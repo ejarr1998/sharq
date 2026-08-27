@@ -112,7 +112,13 @@
     text-decoration:none; cursor:pointer;
     border: 2px solid var(--ink); border-radius: 0;
     background: var(--paper); color: var(--ink);
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease;
   }
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--volt);
+  }
+  .btn:active { transform: translate(0, 0); box-shadow: 1px 1px 0 var(--volt); }
   .btn:active { transform: translate(2px, 2px); }
   .btn-apply { background: var(--volt); color: #fff; border-color: var(--volt); box-shadow: 3px 3px 0 var(--ink); }
   .btn-apply:active { box-shadow: 1px 1px 0 var(--ink); }
@@ -268,7 +274,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v36</div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v37</div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
     <button id="btn-auth">Sign in with Google</button>
@@ -344,12 +350,6 @@ function save() {
   }
 }
 
-let sortMode = localStorage.getItem('sharq_sort') || 'fit';
-window.cycleSort = () => {
-  sortMode = sortMode === 'fit' ? 'new' : sortMode === 'new' ? 'old' : 'fit';
-  localStorage.setItem('sharq_sort', sortMode);
-  render();
-};
 
 let loadSeq = 0;
 async function load() {
@@ -456,14 +456,9 @@ function render() {
 
   let html = '';
   if (tab === 'hunt') {
-    let list = [...hunting];
-    if (sortMode === 'new') list.sort((a, b) => (b.added || '').localeCompare(a.added || '') || (b.score || 0) - (a.score || 0));
-    else if (sortMode === 'old') list.sort((a, b) => (a.added || '').localeCompare(b.added || '') || (b.score || 0) - (a.score || 0));
-    else list.sort((a, b) => (b.score || 0) - (a.score || 0));
-    const sortLabel = sortMode === 'fit' ? 'Best fit' : sortMode === 'new' ? 'Newest first' : 'Oldest first';
-    html = `<div id="clear-bar"><span>Sort: ${sortLabel}</span><button onclick="cycleSort()">Change ↕</button></div>`
-      + (list.length ? list.map(j => cardHtml(j, 'hunt')).join('')
-        : '<div id="empty">Quiet waters here.<br>Fresh catches surface after the daily 2 PM patrol.</div>');
+    const list = [...hunting].sort((a, b) => (b.score || 0) - (a.score || 0));
+    html = list.length ? list.map(j => cardHtml(j, 'hunt')).join('')
+      : '<div id="empty">Quiet waters here.<br>Fresh catches surface after the daily 2 PM patrol.</div>';
     seen = [...new Set([...seen, ...list.map(j => j.id)])];
   } else if (tab === 'caught') {
     html = caught.length ? caught.map(j => cardHtml(j, 'caught')).join('')
