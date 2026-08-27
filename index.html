@@ -54,15 +54,6 @@
     font-size: 10px; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.1em; color: var(--ink-soft); margin-top: 8px;
   }
-  #stats { display:flex; gap:0; margin-top:10px; border: 2px solid var(--ink); background: var(--paper); }
-  #stats .stat {
-    flex:1; padding: 8px 10px; font-size: 11px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft);
-    border-right: 2px solid var(--ink);
-  }
-  #stats .stat:last-child { border-right: none; }
-  #stats .stat b { display:block; font-size: 20px; color: var(--ink); letter-spacing: 0; }
-  #stats .stat.hot b { color: var(--volt); }
 
 
   #jobs { padding: 2px 16px 0; display:flex; flex-direction:column; gap:16px; max-width: 720px; margin: 0 auto; }
@@ -235,14 +226,11 @@
   /* ---------- Desktop / PC layout ---------- */
   @media (min-width: 900px) {
     header { padding: 22px 32px 16px; }
-    .brand, #updated, #stats, #ver { max-width: 1100px; margin-left: auto; margin-right: auto; }
+    .brand, #updated, #ver { max-width: 1100px; margin-left: auto; margin-right: auto; }
     .brand img { width: 84px !important; }
     h1 { font-size: 40px; }
     .tagline { font-size: 13px; }
     #updated { font-size: 11px; }
-    #stats { margin-top: 14px; }
-    #stats .stat { padding: 12px 16px; font-size: 12px; }
-    #stats .stat b { font-size: 26px; }
 
     /* cards in a two-column grid */
     #jobs {
@@ -280,8 +268,7 @@
     <button id="btn-account" aria-label="Account options">&#128100;</button>
   </div>
   <div id="updated">Circling…</div>
-  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v33</div>
-  <div id="stats"></div>
+  <div id="ver" style="font-size:10px;letter-spacing:2px;color:#8a8a95;margin-top:2px;">APP v34</div>
   <div id="account-panel">
     <div id="acct-who">Not signed in</div>
     <button id="btn-auth">Sign in with Google</button>
@@ -354,8 +341,12 @@ function save() {
   }
 }
 
-let freshOnly = false;
-window.toggleFresh = () => { freshOnly = !freshOnly; render(); };
+let sortMode = localStorage.getItem('sharq_sort') || 'fit';
+window.cycleSort = () => {
+  sortMode = sortMode === 'fit' ? 'new' : sortMode === 'new' ? 'old' : 'fit';
+  localStorage.setItem('sharq_sort', sortMode);
+  render();
+};
 
 let loadSeq = 0;
 async function load() {
@@ -438,11 +429,6 @@ function render() {
   $('#c-caught').textContent = caught.length;
   $('#c-dismissed').textContent = released.length;
 
-  const newCount = hunting.filter(j => j.status === 'new' && !seen.includes(j.id)).length;
-  $('#stats').innerHTML =
-    `<div class="stat"><b>${allJobs.length}</b>In water</div>` +
-    `<div class="stat hot"><b>${newCount}</b>Fresh</div>` +
-    `<div class="stat"><b>${caught.length}</b>Caught</div>`;
 
   if (!authChecked) {
     $('#jobs').innerHTML = '<div id="empty">Checking sign-in…</div>';
@@ -452,22 +438,20 @@ function render() {
     $('#c-hunt').textContent = 0;
     $('#c-caught').textContent = 0;
     $('#c-dismissed').textContent = 0;
-    $('#stats').innerHTML =
-      '<div class="stat"><b>—</b>In water</div>' +
-      '<div class="stat hot"><b>—</b>Fresh</div>' +
-      '<div class="stat"><b>—</b>Caught</div>';
     $('#jobs').innerHTML = '<div id="empty">These waters are private.<br>Sign in with Google above to see your hunt.</div>';
     return;
   }
 
   let html = '';
   if (tab === 'hunt') {
-    let list = [...hunting].sort((a, b) => (b.score || 0) - (a.score || 0));
-    if (freshOnly) list = list.filter(j => !seen.includes(j.id));
-    const freshN = hunting.filter(j => !seen.includes(j.id)).length;
-    html = `<div id="clear-bar"><span>${freshN} fresh catch${freshN === 1 ? '' : 'es'}</span><button onclick="toggleFresh()" ${freshOnly ? 'style="background:var(--volt);color:#fff"' : ''}>${freshOnly ? 'Fresh only: ON' : 'Fresh only'}</button></div>`
+    let list = [...hunting];
+    if (sortMode === 'new') list.sort((a, b) => (b.added || '').localeCompare(a.added || '') || (b.score || 0) - (a.score || 0));
+    else if (sortMode === 'old') list.sort((a, b) => (a.added || '').localeCompare(b.added || '') || (b.score || 0) - (a.score || 0));
+    else list.sort((a, b) => (b.score || 0) - (a.score || 0));
+    const sortLabel = sortMode === 'fit' ? 'Best fit' : sortMode === 'new' ? 'Newest first' : 'Oldest first';
+    html = `<div id="clear-bar"><span>Sort: ${sortLabel}</span><button onclick="cycleSort()">Change ↕</button></div>`
       + (list.length ? list.map(j => cardHtml(j, 'hunt')).join('')
-        : `<div id="empty">${freshOnly ? 'No fresh catches — you have seen everything in the water.' : 'Quiet waters here.<br>Fresh catches surface after the daily 2 PM patrol.'}</div>`);
+        : '<div id="empty">Quiet waters here.<br>Fresh catches surface after the daily 2 PM patrol.</div>');
     seen = [...new Set([...seen, ...list.map(j => j.id)])];
   } else if (tab === 'caught') {
     html = caught.length ? caught.map(j => cardHtml(j, 'caught')).join('')
