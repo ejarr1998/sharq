@@ -1,5 +1,5 @@
 {
- "updated": "2026-08-27 (ET)",
+ "updated": "2026-08-28 (ET)",
  "jobs": [
   {
    "id": "openlane-salesforce-administrator",
@@ -115,6 +115,19 @@
    "fit": "Stretch twin of the same new Kong function \u2014 5+ yrs technical/cross-functional work, coaching users, and proof of AI automations that changed how work gets done; your 5 yrs enterprise support plus hands-on AI builds (this tracker included) is the pitch, and pay clears target. Reposted Aug 21.",
    "link": "https://www.tealhq.com/job/senior-ai-enablement-specialist_7ea1a68b3b15bd631f5f56bbb31b4bdc35ff1",
    "category": "ai",
+   "status": "new",
+   "score": 86
+  },
+  {
+   "id": "penske-salesforce-support-analyst",
+   "title": "Salesforce Systems Support Analyst (Agentforce Field Service)",
+   "company": "Penske Truck Leasing",
+   "location": "Remote (US)",
+   "pay": "Not listed (Penske analyst roles typically $70k-$95k)",
+   "added": "2026-08-28",
+   "fit": "Near-exact match: administer and support the Agentforce Field Service platform for Penske's maintenance org \u2014 field service platform (your MWM world) plus Salesforce admin (your certification). Day-to-day support, troubleshooting, enhancement requests, front-end configuration, training and documentation. Full-time, remote.",
+   "link": "https://bebee.com/us/jobs/salesforce-business-analyst-penske-truck-leasing-reading--lensa-7428_76af4a2445e89109ed660866b76971db2838441d72126ee3b7ad6e1597cf6c19",
+   "category": "salesforce",
    "status": "new",
    "score": 86
   }
