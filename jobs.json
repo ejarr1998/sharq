@@ -1,6 +1,32 @@
 {
- "updated": "2026-08-29 (ET)",
+ "updated": "2026-08-30 (ET)",
  "jobs": [
+  {
+   "id": "xoriant-scrum-master-salesforce-ba",
+   "title": "Scrum Master / Salesforce Business Analyst (BA/Admin)",
+   "company": "Xoriant Corporation",
+   "location": "Remote (US)",
+   "pay": "Depends on experience (contract, remote)",
+   "added": "2026-08-30",
+   "fit": "50/50 Scrum Master + Salesforce BA/Admin split. 5+ yrs Agile/Scrum + strong Salesforce config experience required (Flows, validation rules, reports, security). Admin cert preferred. This is a heavier Salesforce lift than your current role \u2014 good if you want to pivot deeper into Salesforce platform work and have the cert or Trailhead hours to back it up.",
+   "link": "https://www.dice.com/job-detail/76f57676-ce45-45d2-b133-56a97af39744",
+   "category": "salesforce",
+   "status": "new",
+   "score": 72
+  },
+  {
+   "id": "valiant-business-analyst-federal",
+   "title": "Business Analyst \u2014 Federal Environment",
+   "company": "Valiant Solutions",
+   "location": "Remote (US)",
+   "pay": "$65k\u2013$80k/year + 99% paid health/dental/vision + 4% 401k match",
+   "added": "2026-08-30",
+   "fit": "100% remote, $65-80k, 3+ yrs BA experience required. Supports an environmentally-focused federal client \u2014 requirements gathering, process mapping, UAT, stakeholder workshops. Agile/Waterfall mix. Degree preferred but not required. Strong benefits (99% health coverage paid). Clean fit for your BA background at Xcel.",
+   "link": "https://careers-valiantsolutions.icims.com/jobs/7459/business-analyst/job",
+   "category": "analyst",
+   "status": "new",
+   "score": 78
+  },
   {
    "id": "pinnacle-business-systems-analyst-indy",
    "title": "Business Systems Analyst (Direct Hire)",
