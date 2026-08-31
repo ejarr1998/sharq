@@ -1,6 +1,32 @@
 {
- "updated": "2026-08-30 (ET)",
+ "updated": "2026-08-31 (ET)",
  "jobs": [
+  {
+   "id": "systems-and-software-enquesta-sr-impl",
+   "title": "Senior Implementation Consultant \u2014 enQuesta CIS (Utility Billing)",
+   "company": "Systems & Software (S&S)",
+   "location": "Remote (US)",
+   "pay": "$85k\u2013$100k/year",
+   "added": "2026-08-31",
+   "fit": "Bullseye lane-1: deliver enQuesta CIS billing implementations for utilities and municipalities \u2014 config, leading implementations, training, production go-lives. This is your Xcel IFS/MWM utility world translated directly: utility domain + enterprise system implementation. $85-100k clears your target, fully remote, low ghost score, posted ~6 days ago.",
+   "link": "https://www.remoterocketship.com/us/jobs/implementation-consultant/",
+   "category": "implementation",
+   "status": "new",
+   "score": 88
+  },
+  {
+   "id": "inscipher-implementation-specialist",
+   "title": "Implementation Specialist \u2014 Insurance Compliance Software",
+   "company": "InsCipher",
+   "location": "Remote (US)",
+   "pay": "$70k\u2013$85k/year (no degree required)",
+   "added": "2026-08-31",
+   "fit": "Onboard partners to InsCipher's insurance-compliance software and APIs: configurations, data imports, timelines, client outcomes. Maps to your implementation + production-support years; API/data-import angle echoes your MWM integration troubleshooting. Pay in range, remote, posted ~5 days ago.",
+   "link": "https://www.remoterocketship.com/us/jobs/implementation-consultant/",
+   "category": "implementation",
+   "status": "new",
+   "score": 74
+  },
   {
    "id": "xoriant-scrum-master-salesforce-ba",
    "title": "Scrum Master / Salesforce Business Analyst (BA/Admin)",
