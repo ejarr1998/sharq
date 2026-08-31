@@ -2,6 +2,58 @@
  "updated": "2026-08-31 (ET)",
  "jobs": [
   {
+   "id": "haag-salas-obrien-salesforce-administrator",
+   "title": "Salesforce Administrator",
+   "company": "Haag, a Salas O'Brien Company",
+   "location": "Remote (US)",
+   "pay": "$75k\u2013$100k/year",
+   "added": "2026-08-31",
+   "fit": "Lane-3 bullseye: full-time Salesforce admin for a 100-year-old employee-owned engineering/consulting firm \u2014 config, user support, reporting, platform enhancements. Pay lands dead-center in your $65-100k target, remote-US, posted in the last few days and open until 9/23. Your 1 yr admin/dev + lapsed Admin cert (recertify) is the pitch.",
+   "link": "https://lensa.com/job-v1/salas-obrien/remote/salesforce-administrator/322c33f6bd71519f182efa100c7dcaad",
+   "category": "salesforce",
+   "status": "new",
+   "score": 86
+  },
+  {
+   "id": "cencora-business-systems-salesforce-admin",
+   "title": "Business Systems & Salesforce Administrator",
+   "company": "Cencora (Fortune 500 pharma distribution)",
+   "location": "Remote (US) / Carrollton, TX",
+   "pay": "$59.5k\u2013$119k/year + full benefits",
+   "added": "2026-08-31",
+   "fit": "Lane-3 hybrid of your two worlds: Salesforce administration (custom objects, flows, validation rules, dashboards) PLUS application support, release management and Power BI reporting on the IT Operations team \u2014 mirrors your Xcel production-support year. Live on Cencora's board and refreshed today on Dice. Band straddles your target; aim mid.",
+   "link": "https://www.dice.com/job-detail/10802b6c-6bee-4282-88b9-80f8a8bf14e6",
+   "category": "salesforce",
+   "status": "new",
+   "score": 84
+  },
+  {
+   "id": "samsara-8121332",
+   "title": "Enterprise Implementation Consultant",
+   "company": "Samsara (NYSE: IOT)",
+   "location": "Remote (US, excl. SF/NYC/DC metros) \u2014 25% travel",
+   "pay": "$88,979\u2013$134,590 base",
+   "added": "2026-08-31",
+   "fit": "Lane-1: own enterprise deployments of Samsara's connected-operations platform \u2014 customers include utilities, transit and field fleets, i.e. your MWM/field-service domain. Implementation, training, adoption, launch plans: your Xcel implementation years translated. Posted Aug 28 on Samsara's own board. Ceiling runs above target; floor is in it. New req \u2014 not the earlier Samsara catch.",
+   "link": "https://www.samsara.com/company/careers/roles/8121332?gh_jid=8121332",
+   "category": "implementation",
+   "status": "new",
+   "score": 80
+  },
+  {
+   "id": "nimble-gravity-ai-enablement-lead",
+   "title": "AI Enablement & Adoption Manager (AI Enablement Lead)",
+   "company": "Nimble Gravity",
+   "location": "Remote (US)",
+   "pay": "Not listed (est. ~$120k \u2014 likely above target)",
+   "added": "2026-08-31",
+   "fit": "Lane-4 opportunistic: consultancy helping banks/insurers move AI from pilot to production \u2014 workshops, enablement plans, adoption metrics, holding technical ground with skeptics. They explicitly want a named thing you built with generative AI (this tracker qualifies) and 5-10 yrs enablement/consulting \u2014 your 5 yrs enterprise support + training is the angle. Live on their Greenhouse board, refreshed Aug 30.",
+   "link": "https://boards.greenhouse.io/nimblegravity/jobs/4727000005",
+   "category": "ai",
+   "status": "new",
+   "score": 70
+  },
+  {
    "id": "systems-and-software-enquesta-sr-impl",
    "title": "Senior Implementation Consultant \u2014 enQuesta CIS (Utility Billing)",
    "company": "Systems & Software (S&S)",
