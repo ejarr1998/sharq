@@ -1,6 +1,19 @@
 {
- "updated": "2026-08-31 (ET)",
+ "updated": "2026-09-01 (ET)",
  "jobs": [
+  {
+   "id": "pingwind-business-analyst-fsa-iam",
+   "title": "Business Analyst \u2014 FSA Identity & Access Management Modernization",
+   "company": "PingWind (SDVOSB federal IT contractor)",
+   "location": "Remote (US)",
+   "pay": "$84k\u2013$116k/year + full benefits",
+   "added": "2026-09-01",
+   "fit": "Lane-2 remote federal BA: Agile business analyst on the FSA Identity & Access Management modernization team \u2014 user stories, acceptance criteria, backlog prioritization, HCD discovery/user research, IAM change requests, Jira/Scrum/SAFe. Asks only 3 yrs + bachelor's; Public Trust required but obtainable (no active clearance needed). Pay floor/mid lands inside your $65-100k target; ceiling runs a little above. Posted ~2 days ago and live across boards.",
+   "link": "https://lensa.com/job-v1/pingwind-inc/remote/business-analyst/8c292d5eb1ab79be5a1af86ec9df5958",
+   "category": "analyst",
+   "status": "new",
+   "score": 76
+  },
   {
    "id": "haag-salas-obrien-salesforce-administrator",
    "title": "Salesforce Administrator",
