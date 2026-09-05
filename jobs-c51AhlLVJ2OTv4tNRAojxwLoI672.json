@@ -1,6 +1,45 @@
 {
- "updated": "2026-09-04 (ET)",
+ "updated": "2026-09-05 (ET)",
  "jobs": [
+  {
+   "id": "samsara-8143242",
+   "title": "Implementation Consultant — Mid-Market",
+   "company": "Samsara (NYSE: IOT)",
+   "location": "Remote (US, excl. SF/NYC/DC metros)",
+   "pay": "$88,979–$134,590 base",
+   "added": "2026-09-05",
+   "fit": "Lane-1: own Mid-Market deployments of Samsara's connected-operations IoT platform — customers are fleets, transit, utilities and field ops, i.e. your MWM/field-service domain. Launch plans, training sessions, adoption tracking, parallel engagements: your Xcel implementation years translated. Asks 4+ yrs senior CS/consulting with end-to-end implementations + bachelor's. Floor in target, ceiling above. New req — distinct from the Aug 31 Enterprise IC catch; live on Samsara's own board this week.",
+   "link": "https://www.samsara.com/company/careers/roles/8143242?gh_jid=8143242",
+   "category": "implementation",
+   "status": "new",
+   "score": 80
+  },
+  {
+   "id": "rolls-royce-defense-ets-business-analyst",
+   "title": "Defense ET&S Business Analyst (GG10)",
+   "company": "Rolls-Royce",
+   "location": "Indianapolis, IN — hybrid 3 days/week onsite",
+   "pay": "Not posted (GG10 grade; Indeed est. $122k–$199k — likely above target)",
+   "added": "2026-09-05",
+   "fit": "Lane-2 local: business analyst inside Rolls-Royce's Defense ET&S org at the Indianapolis campus — full-time, hybrid 3 days onsite, ~30 min from Noblesville, relocation available. Posted in the last couple of days and live on Rolls-Royce's Workday board (JR6158729). Comp likely runs above your $65–100k target, so treat as a reach; the BA core plus the short commute make it worth the application. Defense domain is new territory.",
+   "link": "https://rollsroyce.wd3.myworkdayjobs.com/en-US/professional/job/Indianapolis/Defense-ET-S-Business-Analyst_JR6158729",
+   "category": "analyst",
+   "status": "new",
+   "score": 72
+  },
+  {
+   "id": "genworth-senior-business-systems-analyst",
+   "title": "Senior Business Systems Analyst",
+   "company": "Genworth (Fortune 1000 insurer)",
+   "location": "Remote (US — EST/CST states incl. Indiana) / Richmond, VA hybrid",
+   "pay": "$96,700–$181,000 national range (floor clips target top)",
+   "added": "2026-09-05",
+   "fit": "Lane-2 remote: senior BSA on Genworth's business-systems side — requirements, analysis and systems support for a large insurer. Remote eligible for EST/CST residents (Indiana qualifies); hybrid only if near Richmond. Min 5 yrs BA asked — your Xcel years put you right at the line. Range runs mostly above target; floor touches it. Posted Sep 2, live on Genworth's Workday board (REQ-260245). Not the older manager-level req.",
+   "link": "https://gnw.wd1.myworkdayjobs.com/en-US/GNW/job/Senior-Business-Systems-Analyst_REQ-260245",
+   "category": "analyst",
+   "status": "new",
+   "score": 68
+  },
   {
    "id": "axios-salesforce-business-analyst",
    "title": "Salesforce Business Analyst",
