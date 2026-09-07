@@ -1,6 +1,32 @@
 {
- "updated": "2026-09-06 (ET)",
+ "updated": "2026-09-07 (ET)",
  "jobs": [
+  {
+   "id": "corvel-salesforce-admin-i",
+   "title": "Salesforce Admin I (Marketing Cloud Account Engagement)",
+   "company": "CorVel Corporation (NASDAQ: CRVL)",
+   "location": "Remote (US) — HQ Irvine, CA",
+   "pay": "$62,306–$80,926 + full benefits (401k, medical/dental/vision)",
+   "added": "2026-09-07",
+   "fit": "Lane-3: fully remote admin on CorVel's marketing team — user/security setup, flows, validation rules, reports/dashboards, lead routing and data quality, plus Marketing Cloud Account Engagement and CPQ. Asks 2–4 yrs hands-on admin vs your ~1 (the Admin I banding helps) and Admin cert only 'preferred' — recertify before the screen; MCAE/CPQ are learn-on-the-job. Pay floor sits a touch under your $65k floor, mid-band squarely in target. Stable public risk-management company; confirmed live across boards this week (bebee refresh 9/6, open through early Nov).",
+   "link": "https://builtin.com/job/salesforce-admin-i/10513112",
+   "category": "salesforce",
+   "status": "new",
+   "score": 72
+  },
+  {
+   "id": "cloudsquare-salesforce-business-analyst",
+   "title": "Salesforce Business Analyst",
+   "company": "Cloudsquare (Salesforce-native lending platform)",
+   "location": "Remote (US) — 100% remote company",
+   "pay": "Not listed (Lensa est. $97K–$119K — likely top of target or above)",
+   "added": "2026-09-07",
+   "fit": "Lane-3 with a lane-1 spine: customer-facing BA owning requirements discovery, user stories, UAT and go-lives for implementations of Cloudsquare's Salesforce-native lending platform, then trusted-advisor enhancement work post-launch — your Xcel implementation years translated onto the platform you already admin. Asks 3+ yrs Salesforce-project BA (your ~1 yr admin/dev plus implementation years is the pitch); lending knowledge 'preferred', not required. Confirmed live on their own careers page today; apply by emailing recruiting@cloudsquare.io with the role in the subject.",
+   "link": "https://cloudsquare.io/job-listing/salesforce-business-analyst/",
+   "category": "salesforce",
+   "status": "new",
+   "score": 68
+  },
   {
    "id": "fhlbi-crm-business-systems-analyst",
    "title": "CRM and Business Systems Analyst (Dynamics 365)",
