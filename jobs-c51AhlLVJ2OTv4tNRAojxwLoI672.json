@@ -1,6 +1,58 @@
 {
- "updated": "2026-09-07 (ET)",
+ "updated": "2026-09-08 (ET)",
  "jobs": [
+  {
+   "id": "collabera-ifs-cloud-solution-architect",
+   "title": "Solution Architect — IFS Cloud Implementation (EAM/FSM/MWM/PSO)",
+   "company": "Collabera (client IFS Cloud program)",
+   "location": "Remote (US) — listed Orange Park, FL",
+   "pay": "$65–$75/hr contract (~$135K annualized)",
+   "added": "2026-09-08",
+   "fit": "Lane-1 bullseye: Collabera staffing a client's IFS Cloud implementation — hands-on EAM/Work & Asset Management with FSM, MWM and PSO named outright, i.e. exactly your Xcel stack. The JD says relevant implementation experience matters more than years and wants someone who can guide the implementation, recommend solutions and advise stakeholders, not just configure — your senior-tech implementation years map straight on. It's a staffing-firm contract at $65–75/hr (annualizes ~$135K, above target), so treat it as a high-rate bridge play rather than a forever home. Dice card refreshed today; Easy Apply.",
+   "link": "https://www.dice.com/job-detail/b08c5942-8d97-4029-98c4-7ba084c69a0b",
+   "category": "implementation",
+   "status": "new",
+   "score": 85
+  },
+  {
+   "id": "draftkings-salesforce-administrator",
+   "title": "Salesforce Administrator",
+   "company": "DraftKings (NASDAQ: DKNG)",
+   "location": "Remote (US)",
+   "pay": "$70,500–$88,100 + bonus/equity",
+   "added": "2026-09-08",
+   "fit": "Lane-3: Salesforce Administrator supporting DraftKings' VIP/Player Development teams — flows, reports/dashboards, user access and platform config at a NASDAQ name, pay squarely in target. Two flags: an ACTIVE Salesforce Administrator cert is required (yours is lapsed — recertify before the screen, the pitch we keep making) and they ask 2+ yrs hands-on vs your ~1, plus working SQL/Snowflake and Apex familiarity. Careers site tags it Remote–Massachusetts + 1 other location while boards list Remote–US — confirm Indiana eligibility when you apply. Posted ~Sep 4, confirmed listed on their own careers page.",
+   "link": "https://builtin.com/job/salesforce-administrator/11020286",
+   "category": "salesforce",
+   "status": "new",
+   "score": 74
+  },
+  {
+   "id": "kbr-enterprise-app-support-technician",
+   "title": "Enterprise Application Support Technician (Financial Systems)",
+   "company": "KBR",
+   "location": "Remote (USA)",
+   "pay": "Not listed (direct hire, full benefits)",
+   "added": "2026-09-08",
+   "fit": "Lane-1 support play: front-line application support and queue manager for KBR's corporate financial systems — Deltek Costpoint ERP, RFgen, Bloomberg Tax — investigating application errors, monitoring interfaces and scheduled jobs, root-causing across network/DB/app layers. Asks 2+ yrs IT support or app admin plus basic SQL/API concepts — your Xcel production-support year and IFS exposure clear the bar. Explicitly built as a growth vector into enterprise application administration or solution architecture, cross-training with senior admins. US citizenship required (you're fine). Comp not listed; req reposted ~Sep 3 and still active today.",
+   "link": "https://careers.kbr.com/us/en/job/R2126249/Enterprise-Application-Support-Technician-Financial-Systems",
+   "category": "support",
+   "status": "new",
+   "score": 72
+  },
+  {
+   "id": "pindrop-product-manager-ai-enablement",
+   "title": "Product Manager, AI Enablement",
+   "company": "Pindrop (voice security)",
+   "location": "Remote (US)",
+   "pay": "$130,000–$150,000 base (above target)",
+   "added": "2026-09-08",
+   "fit": "Lane-4 opportunistic reach: Pindrop wants a PM, AI Enablement to drive internal AI adoption — frontier CLIs (Claude Code/Codex), shipped agentic systems, context engineering, and a GitHub portfolio of 3–4 things you actually built. That last block is literally your Sharq/Dead Air build pattern; the gaps are '3+ yrs product-management ownership' with no formal PM title on your side, and a base that runs well above target. Worth a long-shot application if you can frame Sharq as product ownership. Listed on Pindrop's own careers page today.",
+   "link": "https://www.pindrop.com/company/careers/",
+   "category": "ai",
+   "status": "new",
+   "score": 58
+  },
   {
    "id": "corvel-salesforce-admin-i",
    "title": "Salesforce Admin I (Marketing Cloud Account Engagement)",
