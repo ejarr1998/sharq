@@ -1,6 +1,45 @@
 {
- "updated": "2026-09-08 (ET)",
+ "updated": "2026-09-09 (ET)",
  "jobs": [
+  {
+   "id": "td-synnex-salesforce-systems-analyst",
+   "title": "Salesforce Systems Analyst (Leap Platform)",
+   "company": "TD SYNNEX (NASDAQ: SNX)",
+   "location": "Remote (US) — must work Pacific time hours",
+   "pay": "Not listed (Lensa shows min ~$78K)",
+   "added": "2026-09-09",
+   "fit": "Lane-3: junior-friendly systems analyst on TD SYNNEX's Leap Platform team — Salesforce support, troubleshooting, reporting, data management and system administration, working alongside their Senior Salesforce Administrator and explicitly pitched as a place to grow your Salesforce expertise. Your ~1 yr admin/dev plus the Xcel production-support year is exactly the profile, and no cert is demanded in the posting. Remote-US but Pacific-hours, so factor the time shift. Original req dates to late Aug, reposted in the last few days and open until 10/3.",
+   "link": "https://bebee.com/us/jobs/salesforce-systems-analyst-td-synnex-louisville--lensa-2365_315cf08fbffa106a22dff9fb5dff81dd7812e839ba062d797557bd08c6e7ba7f",
+   "category": "salesforce",
+   "status": "new",
+   "score": 78
+  },
+  {
+   "id": "cardiff-senior-salesforce-admin",
+   "title": "Senior Salesforce Administrator — Automations & Integrations",
+   "company": "Cardiff (small-business lending fintech)",
+   "location": "Remote (US)",
+   "pay": "$80,000/year",
+   "added": "2026-09-09",
+   "fit": "Lane-3: own day-to-day Salesforce configuration, data integrity, deployments and integrations for Cardiff's lending platform, reporting to the Director of Engineering and partnering with Sales, RevOps, Underwriting and Marketing. Explicit emphasis on AI-driven automation and external agents, plus migrating logic off Salesforce to AWS over time — your admin/dev year plus the AI-build pattern (this tracker) speaks directly to it. 'Senior' title at a ~200-person fintech, so scope is broader than deep; $80k lands mid-target. Board card refreshed this week, open until 11/11.",
+   "link": "https://bebee.com/us/jobs/senior-salesforce-admin-automations-integrations-remote-cardiff-llc-united-states--appcast-7428_198f44b31664f2b4ddbfed6d4d1676a997115a8f3c4adb7a905129eedddca099",
+   "category": "salesforce",
+   "status": "new",
+   "score": 74
+  },
+  {
+   "id": "pme-business-systems-analyst-technical-writer",
+   "title": "Business Systems Analyst / Technical Writer (Federal Healthcare IT)",
+   "company": "Professional Management Enterprises (PME) — Indianapolis",
+   "location": "100% Remote (US) — M–F 8:00–5:00 Eastern",
+   "pay": "Not listed (contract, weekly pay; temp-to-perm potential)",
+   "added": "2026-09-09",
+   "fit": "Lane-2 with a local tie: Indy-based PME staffing a BSA/Technical Writer on federal healthcare IT projects — requirements analysis, process flows, JAD facilitation, test support and documentation management in Confluence/SharePoint. Asks 4+ yrs requirements/documentation, which your Xcel BA years clear; Medicare/Medicaid and SAFe are 'preferred,' not required. Public Trust needed but PME sponsors it (3 of last 5 yrs US residency — you're fine). Contract with potential conversion, so treat it as a bridge play. Posted Sep 3 on PME's own board and still open today.",
+   "link": "https://jobs.pme-indy.com/",
+   "category": "analyst",
+   "status": "new",
+   "score": 66
+  },
   {
    "id": "collabera-ifs-cloud-solution-architect",
    "title": "Solution Architect — IFS Cloud Implementation (EAM/FSM/MWM/PSO)",
