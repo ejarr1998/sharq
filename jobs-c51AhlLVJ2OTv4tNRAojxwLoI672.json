@@ -1,6 +1,45 @@
 {
- "updated": "2026-09-09 (ET)",
+ "updated": "2026-09-10 (ET)",
  "jobs": [
+  {
+   "id": "henry-schein-senior-ifs-analyst",
+   "title": "Senior IFS Analyst (IFS Cloud FSM Configuration & Training)",
+   "company": "Henry Schein (NASDAQ: HSIC)",
+   "location": "Remote (US) — Work from Home",
+   "pay": "$65,093–$101,708 + bonus eligibility",
+   "added": "2026-09-10",
+   "fit": "Lane-1 bullseye: own configuration, optimization and user adoption of Henry Schein's IFS Cloud Field Service Management platform — workflows, business rules, SLAs, work orders, dispatch, inventory and mobile ops — plus end-user training, SOPs and change management. Asks 3+ yrs IFS FSM (or similar) and names IFS Mobile Workforce Management and PSO outright — literally your Xcel IFS/MWM stack. ClickLearn, basic transact-SQL and Power BI are pluses; IFS FSM cert 'or similar' preferred, not required. Pay band dead-center of target at a Fortune ~300 healthcare distributor. Req R134523 posted ~Aug 26 on their Workday board, still live and recirculating across boards this week — apply fast.",
+   "link": "https://henryschein.wd1.myworkdayjobs.com/en-US/External_Careers/job/United-States---Remote/Senior-IFS-Analyst_R134523",
+   "category": "implementation",
+   "status": "new",
+   "score": 90
+  },
+  {
+   "id": "us-signal-senior-business-systems-analyst",
+   "title": "Senior Business Systems Analyst — Business Systems & AI Team",
+   "company": "US Signal",
+   "location": "Remote (US) — Fully Remote",
+   "pay": "$75,000–$105,000 + full benefits",
+   "added": "2026-09-10",
+   "fit": "Lane-2 remote with a lane-4 twist: senior BSA on US Signal's Business Systems and AI team, reporting to the Chief of AI — gather requirements, map current-state workflows, and turn messy business problems into clear documentation and options so leadership can decide where to invest in systems and process. Asks only 2-4+ yrs BA/business-systems work — your Xcel BA years clear it comfortably, and the seat sits inside the company's AI-adoption engine, which pairs well with the Sharq build story. Fully remote US, pay squarely in target. Posted Aug 28, live on their Paylocity board today.",
+   "link": "https://recruiting.paylocity.com/recruiting/jobs/All/51d8815b-c6b7-4138-98f1-fd154b657b35/US-Signal",
+   "category": "analyst",
+   "status": "new",
+   "score": 78
+  },
+  {
+   "id": "cloudmasonry-business-analyst",
+   "title": "Business Analyst — Salesforce Managed Services",
+   "company": "CloudMasonry (Salesforce consulting partner)",
+   "location": "Indianapolis, IN (downtown) — in office at least 4 days/week",
+   "pay": "$60,000–$85,000 + 401(k) match, unlimited PTO, cert reimbursement",
+   "added": "2026-09-10",
+   "fit": "Lane-3 local: BA on CloudMasonry's Managed Services team supporting clients' Salesforce orgs day-to-day — platform config, data transformation, UI/process automation, security and visibility, translating user needs into changes the team can build. Existing Salesforce certs or Trailhead success 'looked upon very favorably' — recertify the Admin and lean on your ~1 yr admin/dev plus the Xcel production-support year. Downtown Indy office ~35 min from Noblesville; 4 days onsite is the tradeoff, but cert reimbursement helps re-up the lapsed certs on their dime. Actively hiring this week on their TeamTailor board.",
+   "link": "https://cloudmasonry.na.teamtailor.com/jobs",
+   "category": "salesforce",
+   "status": "new",
+   "score": 76
+  },
   {
    "id": "td-synnex-salesforce-systems-analyst",
    "title": "Salesforce Systems Analyst (Leap Platform)",
